@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import beans.CodeLine;
 import beans.Component;
@@ -401,41 +400,41 @@ public class Dao extends DriverAccessor{
 		return componentIds;
 	}
 
-	public List<Component> getComponentsByIds(Set<Integer> componentIds) {
-		List<Component> components = new ArrayList<>();
-		this.connection = this.createConnection();
-		try{．
-			String sql = "select * from users where user_id = ?";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			
-			stmt.setString(1, user_id);
-
-			ResultSet rs = stmt.executeQuery();
-
-			if(rs.first()){
-				//結果rsから，"id"というカラムの値を取得し，userのIdにセット(カラム名は，mysqlからテーブル構造を参照)
-				user.setId( rs.getString("user_id") );
-				//rsから，"password"というカラムの値を取得し，userのpasswordにセット（以下，同様）
-				user.setPassword( rs.getString("password") );
-				user.setName( rs.getString("name") );
-			}
-			else{
-				this.closeConnection(this.connection);
-				return null;
-			}
-
-		}catch(SQLException e){
-			this.closeConnection(this.connection);
-			e.printStackTrace();
-			return null;
-
-		} finally {
-			this.closeConnection(this.connection);
-		}
-
-		return user;
-
-	}
+//	public List<Component> getComponentsByIds(Set<Integer> componentIds) {
+//		List<Component> components = new ArrayList<>();
+//		this.connection = this.createConnection();
+//		try{．
+//			String sql = "select * from users where user_id = ?";
+//			PreparedStatement stmt = this.connection.prepareStatement(sql);
+//			
+//			stmt.setString(1, user_id);
+//
+//			ResultSet rs = stmt.executeQuery();
+//
+//			if(rs.first()){
+//				//結果rsから，"id"というカラムの値を取得し，userのIdにセット(カラム名は，mysqlからテーブル構造を参照)
+//				user.setId( rs.getString("user_id") );
+//				//rsから，"password"というカラムの値を取得し，userのpasswordにセット（以下，同様）
+//				user.setPassword( rs.getString("password") );
+//				user.setName( rs.getString("name") );
+//			}
+//			else{
+//				this.closeConnection(this.connection);
+//				return null;
+//			}
+//
+//		}catch(SQLException e){
+//			this.closeConnection(this.connection);
+//			e.printStackTrace();
+//			return null;
+//
+//		} finally {
+//			this.closeConnection(this.connection);
+//		}
+//
+//		return user;
+//
+//	}
 
 
 }
