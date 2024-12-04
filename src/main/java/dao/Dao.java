@@ -400,7 +400,6 @@ public class Dao extends DriverAccessor{
 		return componentIds;
 	}
 	
-
 //	public List<Component> getComponentsByIds(Set<Integer> componentIds) {
 //		List<Component> components = new ArrayList<>();
 //		this.connection = this.createConnection();
