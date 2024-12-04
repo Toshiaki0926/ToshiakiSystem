@@ -1,0 +1,10 @@
+使うデータベース名
+hintsys
+
+use hintsys;
+
+ユーザー名とパスワード
+ユーザー名：Toshiaki
+パスワード：Toshiaki
+
+mysql -u Toshiaki -p

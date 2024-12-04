@@ -1,0 +1,42 @@
+[
+    {
+        "line_number": 1,
+        "code": "System.out.println(\"キーボードから入力してください\");",
+        "description": "「キーボードから入力してください」と標準出力に出力する"
+    },
+    {
+        "line_number": 2,
+        "code": "int num = new java.util.Scanner(System.in).nextInt();",
+        "description": "標準入力から整数を読み込み、num変数に格納する"
+    },
+    {
+        "line_number": 4,
+        "code": "if(num < 10) {",
+        "description": "numが10未満かどうかを判定する"
+    },
+    {
+        "line_number": 5,
+        "code": "num = num + 10 + 20 + 30;",
+        "description": "numに10, 20, 30を加算する"
+    },
+    {
+        "line_number": 7,
+        "code": "} else {",
+        "description": "numが10以上の場合の処理を開始する"
+    },
+    {
+        "line_number": 8,
+        "code": "num = num - 1 - 2 - 3;",
+        "description": "numから1, 2, 3を減算する"
+    },
+    {
+        "line_number": 10,
+        "code": "}",
+        "description": "if-else文の終了"
+    },
+    {
+        "line_number": 11,
+        "code": "System.out.println(num);",
+        "description": "numの値を標準出力に出力する"
+    }
+]
