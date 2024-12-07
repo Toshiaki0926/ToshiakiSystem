@@ -27,6 +27,7 @@ public class ComponentAddServlet extends HttpServlet {
 
 		//requestのデータの文字コードをUTF-8に設定
 		request.setCharacterEncoding("UTF-8");
+		
 		// 部品名の取得
 		String componentDescription = request.getParameter("componentDescription");
 
