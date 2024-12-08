@@ -22,6 +22,7 @@ public class CodeComponentAddServlet extends HttpServlet{
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
 		String selectedComponentId = request.getParameter("component"); // プルダウンで選択された部品
@@ -34,11 +35,6 @@ public class CodeComponentAddServlet extends HttpServlet{
 	    Integer parentId = (parent_id != null && !parent_id.isEmpty()) ? Integer.parseInt(parent_id) : null;
 		
 		String codes = request.getParameter("codes"); // JSPで送信されたコード全体
-		
-		System.out.println(selectComponentId);
-		System.out.println(sourceId);
-		System.out.println(parentId);
-		System.out.println(codes);
 
 		Dao dao = new Dao();
 
@@ -49,6 +45,10 @@ public class CodeComponentAddServlet extends HttpServlet{
 		component.setSource_id(sourceId);
 		component.setParent_id(parentId);
 		component.setComponent_code(codes);
+		
+		//デバッグ用
+//		System.out.println(codes);
+//		System.out.println(component.getComponent_code());
 		
 		dao.insertComponentList(component);
 		

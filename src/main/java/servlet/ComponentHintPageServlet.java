@@ -18,6 +18,8 @@ public class ComponentHintPageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
 
 		String cIdParam = request.getParameter("component_id");
 		int component_id = Integer.parseInt(cIdParam);
@@ -30,6 +32,8 @@ public class ComponentHintPageServlet extends HttpServlet {
 		String Component_Code = dao.getComponentCode(component_id, source_id);
 		
 		String Code = "public class Sample1 {\n public static void main(String[] args){\n" + Component_Code + "\n} \n}";
+
+		System.out.println(Code);
 
 		// 変数名を空欄に置き換える
 		String hintCode = Main2.replaceVariables(Code);

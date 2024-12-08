@@ -54,6 +54,8 @@ public class CodeComponentAddPageServlet extends HttpServlet {
 			builder.append(code).append("\n"); // 各行に改行を追加
 		}
 		String strCode = builder.toString().trim();
+		
+		System.out.println(strCode);
 
 		List<Component> components = dao.getComponents(); // DAOメソッドで取得
 		// リストをリクエスト属性にセット

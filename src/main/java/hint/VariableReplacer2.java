@@ -91,14 +91,14 @@ public class VariableReplacer2 extends VoidVisitorAdapter<Void> {
 	    });
 	}
 
-	@Override
-	public void visit(NameExpr nameExpr, Void arg) {
-	    super.visit(nameExpr, arg);
-	    // 変数名かどうかをチェックし、セットに含まれない場合は空欄に置き換える
-	    if (!varNames.contains(nameExpr.getNameAsString())) {
-	        nameExpr.setName("_");
-	    }
-	}
+//	@Override
+//	public void visit(NameExpr nameExpr, Void arg) {
+//	    super.visit(nameExpr, arg);
+//	    // 変数名かどうかをチェックし、セットに含まれない場合は空欄に置き換える
+//	    if (!varNames.contains(nameExpr.getNameAsString())) {
+//	        nameExpr.setName("_");
+//	    }
+//	}
 
 	@Override
 	public void visit(CastExpr castExpr, Void arg) {

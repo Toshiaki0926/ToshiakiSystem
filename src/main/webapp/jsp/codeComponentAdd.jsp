@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="beans.Component"%>
+<%@ page import="main.EscapeHtml"%>
 <!-- Component クラスをインポート -->
 
 <!DOCTYPE html>
@@ -34,7 +35,7 @@ pre {
 <body>
 	<h1>コード部品設定</h1>
 
-	<form action="CodeComponentAddServlet" method="POST">
+	<form action="CodeComponentAddServlet" method="POST" accept-charset="UTF-8">
 		<table>
 			<thead>
 				<tr>
@@ -66,7 +67,7 @@ pre {
 							%>
 					</select></td>
 				</tr>
-				<input type="hidden" name="codes" value="<%=codes%>">
+				<input type="hidden" name="codes" value="<%=EscapeHtml.escapeHtml(codes)%>">
 				<!-- codes を送信 -->
 				<%
 				} else {
