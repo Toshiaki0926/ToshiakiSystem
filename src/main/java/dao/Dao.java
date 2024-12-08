@@ -287,7 +287,7 @@ public class Dao extends DriverAccessor{
 
 
 	//line_numberの配列を受け取ると、該当する行のcode全てを取得
-	public List<String> getCodeLines(int[] line_numbers) {
+	public List<String> getCodeLines(int[] line_numbers, int source_id) {
 		List<String> codeLines = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
@@ -298,7 +298,7 @@ public class Dao extends DriverAccessor{
 
 		try {
 			// `IN` 演算子を使用してクエリを動的に生成
-			StringBuilder sqlBuilder = new StringBuilder("SELECT code FROM code_lines WHERE line_number IN (");
+			StringBuilder sqlBuilder = new StringBuilder("SELECT code FROM code_lines WHERE source_id = ? AND line_number IN (");
 			for (int i = 0; i < line_numbers.length; i++) {
 				sqlBuilder.append("?");
 				if (i < line_numbers.length - 1) {
@@ -310,8 +310,9 @@ public class Dao extends DriverAccessor{
 
 			// プリペアドステートメントを準備
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, source_id);
 			for (int i = 0; i < line_numbers.length; i++) {
-				stmt.setInt(i + 1, line_numbers[i]); // パラメータを設定
+				stmt.setInt(i + 2, line_numbers[i]); // パラメータを設定
 			}
 
 			// クエリを実行
@@ -378,13 +379,13 @@ public class Dao extends DriverAccessor{
 		}
 	}
 
-	//ソースコードに含まれる部品のリストを取得
+	//ソースコードに含まれる親がない部品のリストを取得
 	public List<Integer> getComponentList(int source_id) {
 		List<Integer> componentIds = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
 		try {
-			String sql = "SELECT component_id FROM component_lists WHERE source_id = ?";;
+			String sql = "SELECT component_id FROM component_lists WHERE source_id = ? AND parent_id IS NULL";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			// 1個目の「?」に値をセット
 			stmt.setInt(1, source_id);
@@ -397,10 +398,13 @@ public class Dao extends DriverAccessor{
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			this.closeConnection(this.connection);
 		}
 		return componentIds;
 	}
 
+	//部品idを受け取り、一致する部品のリストを返す
 	public List<Component> getComponentsByIds(Set<Integer> componentIds) {
 		List<Component> components = new ArrayList<>();
 		this.connection = this.createConnection();
@@ -442,6 +446,32 @@ public class Dao extends DriverAccessor{
 
 		return components;
 
+	}
+
+	//ソースコードに含まれる部品のうち最も若いidのコードを返す
+	public String getComponentCode(int componentId, int sourceId) {
+		String componentCode = null;
+		this.connection = this.createConnection();
+		
+		try {
+			String sql = "SELECT component_code FROM component_lists WHERE component_id = ? AND source_id = ? ORDER BY list_id ASC LIMIT 1";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			
+			stmt.setInt(1, componentId);
+			stmt.setInt(2, sourceId);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				componentCode = rs.getString("component_code");
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return componentCode;
 	}
 
 

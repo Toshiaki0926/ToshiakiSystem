@@ -30,12 +30,14 @@ public class ComponentAddServlet extends HttpServlet {
 		
 		// 部品名の取得
 		String componentDescription = request.getParameter("componentDescription");
+		
+		System.out.println("Component Description: " + componentDescription);
 
 		// Daoを使ってデータベースに保存
 		Dao dao = new Dao();
 		dao.insertComponent(componentDescription);
 
 		// リダイレクトして同じページに戻る
-		response.sendRedirect("ComponentAddServlet");
+		response.sendRedirect("ComponentAddPageServlet");
 	}
 }

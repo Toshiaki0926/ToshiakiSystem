@@ -47,7 +47,7 @@ public class CodeComponentAddPageServlet extends HttpServlet {
 
 		// サンプル: データベースから `CodeLine` を取得するDAO
 		Dao dao = new Dao();
-		List<String> Codes = dao.getCodeLines(selectedLineNumbers);
+		List<String> Codes = dao.getCodeLines(selectedLineNumbers, sourceId);
 
 		StringBuilder builder = new StringBuilder();
 		for (String code : Codes) {
