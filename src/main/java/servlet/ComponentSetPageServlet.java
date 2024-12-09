@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -34,13 +35,13 @@ public class ComponentSetPageServlet extends HttpServlet {
 			return; // 処理を終了
 		}
 
-		//選択した行idを格納する配列
-		int[] selectedLineIds = new int[selectedCodes.length];
+		//選択した行idを格納するリスト
+		List<Integer> selectedLineIds = new ArrayList<>();
 
 		//行idを整数型にキャスト
-		for (int i = 0; i < selectedCodes.length; i++) {
-			selectedLineIds[i] = Integer.parseInt(selectedCodes[i]);
-		}
+		for (String str : selectedCodes) {
+            selectedLineIds.add(Integer.parseInt(str)); // 文字列を整数に変換して追加
+        }
 
 		// 変換後の確認（デバッグ用）
 		for (int num : selectedLineIds) {

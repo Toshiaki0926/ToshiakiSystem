@@ -287,7 +287,7 @@ public class Dao extends DriverAccessor{
 
 
 	//lineIdsの配列を受け取ると、該当する行のcode全てを取得
-	public List<String> getCodeLines(int[] lineIds, int sourceId) {
+	public List<String> getCodeLines(List<Integer> lineIds, int sourceId) {
 		List<String> codeLines = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
@@ -297,22 +297,24 @@ public class Dao extends DriverAccessor{
 		}
 
 		try {
-			// `IN` 演算子を使用してクエリを動的に生成
-			StringBuilder sqlBuilder = new StringBuilder("SELECT code FROM code_lines WHERE source_id = ? AND line_id IN (");
-			for (int i = 0; i < lineIds.length; i++) {
-				sqlBuilder.append("?");
-				if (i < lineIds.length - 1) {
-					sqlBuilder.append(", ");
+			// プレースホルダーを生成 (例: "?, ?, ?")
+			StringBuilder placeholders = new StringBuilder();
+			for (int i = 0; i < lineIds.size(); i++) {
+				placeholders.append("?");
+				if (i < lineIds.size() - 1) {
+					placeholders.append(", ");
 				}
 			}
-			sqlBuilder.append(")");
-			String sql = sqlBuilder.toString();
 
-			// プリペアドステートメントを準備
+			// 動的に SQL 文を構築
+			String sql = "SELECT code FROM code_lines WHERE source_id = ? AND line_id IN (" + placeholders + ")";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			// パラメータを設定
 			stmt.setInt(1, sourceId);
-			for (int i = 0; i < lineIds.length; i++) {
-				stmt.setInt(i + 2, lineIds[i]); // パラメータを設定
+			int index = 2; // sourceId に続くパラメータのインデックス
+			for (int lineId : lineIds) {
+				stmt.setInt(index++, lineId);
 			}
 
 			// クエリを実行
@@ -402,15 +404,15 @@ public class Dao extends DriverAccessor{
 		}
 	}
 
-	//部品に対応する行番号を保存
-	public void insertListLines(int listId, int[] lineIds) {
+	// 部品に対応する行番号を保存
+	public void insertListLines(int listId, List<Integer> lineIds) {
 		this.connection = this.createConnection();
 
 		try {
 			String sql = "INSERT INTO component_lines (list_id, line_id) VALUES (?, ?)";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 
-			for (int lineId : lineIds) {
+			for (int lineId : lineIds) { // List<Integer>を直接扱う
 				stmt.setInt(1, listId);
 				stmt.setInt(2, lineId);
 				stmt.addBatch(); // バッチ処理
@@ -623,7 +625,7 @@ public class Dao extends DriverAccessor{
 				int lineNumber = rs.getInt("line_number");
 				String code = rs.getString("code");
 				String description = rs.getString("description");
-				
+
 				CodeLine codeLine = new CodeLine(lineId, lineNumber, code, description);
 				codeLines.add(codeLine);
 			}

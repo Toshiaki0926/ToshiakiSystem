@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +53,7 @@ public class ComponentSetServlet extends HttpServlet{
 		int listId = dao.insertComponentList(component);
 		
 		//sessionに保存した現在のsourceIdを取得
-		int[] lineIds = (int[]) session.getAttribute("lineIds");
+		List<Integer> lineIds = (List<Integer>) session.getAttribute("lineIds");
 
 		//部品の該当行を保存
 		dao.insertListLines(listId, lineIds);
