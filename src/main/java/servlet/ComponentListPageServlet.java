@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import beans.Component;
 import dao.Dao;
 
-@WebServlet("/ComponentListsPageServlet")
-public class ComponentListsPageServlet extends HttpServlet {
+@WebServlet("/ComponentListPageServlet")
+public class ComponentListPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -40,7 +40,7 @@ public class ComponentListsPageServlet extends HttpServlet {
 		// リストをリクエスト属性にセット
 		request.setAttribute("Components", components);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentLists.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentList.jsp");
 		dispatcher.forward(request, response);
 	}
 }

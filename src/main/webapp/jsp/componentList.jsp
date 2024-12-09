@@ -32,6 +32,9 @@
 		<form action="ComponentListsPageServlet" method="get" style="display: inline;">
 			<input type="submit" value="詳細を見る">
 		</form>
+		<form action="ComponentListsPageServlet" method="get" style="display: inline;">
+			<input type="submit" value="1行ずつ見る">
+		</form>
 	</div>
 	<br>
 	<% 

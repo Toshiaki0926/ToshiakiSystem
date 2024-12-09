@@ -24,7 +24,7 @@
 	<div>
 		<label><%= s.getSource_Name() %></label>
 		<!-- コード表示ボタンを配置 -->
-		<form action="ComponentListsPageServlet" method="get" style="display: inline;">
+		<form action="ComponentListPageServlet" method="get" style="display: inline;">
 			<input type="hidden" name="source_id" value="<%= s.getSource_Id() %>">
 			<input type="submit" value="部品を表示">
 		</form>
