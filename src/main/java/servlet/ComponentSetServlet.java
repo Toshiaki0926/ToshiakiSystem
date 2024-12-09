@@ -7,12 +7,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.ComponentList;
 import dao.Dao;
 
-@WebServlet("/CodeComponentAddServlet")
-public class CodeComponentAddServlet extends HttpServlet{
+@WebServlet("/ComponentSetServlet")
+public class ComponentSetServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -27,31 +28,35 @@ public class CodeComponentAddServlet extends HttpServlet{
 
 		String selectedComponentId = request.getParameter("component"); // プルダウンで選択された部品
 		int selectComponentId = Integer.parseInt(selectedComponentId);
-		
-		String source_id = request.getParameter("source_id");//現在のソースコードid
-		int sourceId = Integer.parseInt(source_id);
-		
+
+		//sessionを取得
+		HttpSession session = request.getSession(false);
+		//sessionに保存した現在のsourceIdを取得
+		int sourceId = (int) session.getAttribute("sourceId");
+
 		String parent_id = request.getParameter("parentId"); // 親ID（nullの可能性あり）
-	    Integer parentId = (parent_id != null && !parent_id.isEmpty()) ? Integer.parseInt(parent_id) : null;
-		
+		Integer parentId = (parent_id != null && !parent_id.isEmpty()) ? Integer.parseInt(parent_id) : null;
+
 		String codes = request.getParameter("codes"); // JSPで送信されたコード全体
 
 		Dao dao = new Dao();
 
 		ComponentList component = new ComponentList();
-		
-		//確認用
+
 		component.setComponent_id(selectComponentId);
 		component.setSource_id(sourceId);
 		component.setParent_id(parentId);
 		component.setComponent_code(codes);
+
+		//部品を保存し、生成されたlist_idを取得する
+		int listId = dao.insertComponentList(component);
 		
-		//デバッグ用
-//		System.out.println(codes);
-//		System.out.println(component.getComponent_code());
-		
-		dao.insertComponentList(component);
-		
+		//sessionに保存した現在のsourceIdを取得
+		int[] lineIds = (int[]) session.getAttribute("lineIds");
+
+		//部品の該当行を保存
+		dao.insertListLines(listId, lineIds);
+
 
 		response.sendRedirect("ComponentEditorPageServlet?source_id=" + sourceId);
 	}

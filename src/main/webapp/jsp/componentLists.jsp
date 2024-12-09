@@ -17,7 +17,7 @@
 
 	<% 
 	List<Component> components = (List<Component>)request.getAttribute("Components");
-	Integer SourceId = (Integer) request.getAttribute("SourceId");%>
+	%>
 	<% 
         if (components != null) { 
             for (Component c : components) { 
@@ -27,11 +27,9 @@
 		<!-- コード表示ボタンを配置 -->
 		<form action="ComponentHintPageServlet" method="get" style="display: inline;">
 			<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
-			<input type="hidden" name="source_id" value="<%= SourceId %>">
 			<input type="submit" value="ヒントを見る">
 		</form>
 		<form action="ComponentListsPageServlet" method="get" style="display: inline;">
-			<input type="hidden" name="source_id" value="<%= SourceId %>">
 			<input type="submit" value="詳細を見る">
 		</form>
 	</div>

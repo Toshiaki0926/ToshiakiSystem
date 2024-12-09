@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.Dao;
 import hint.Main2;
@@ -18,26 +19,26 @@ public class ComponentHintPageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
 
 		String cIdParam = request.getParameter("component_id");
 		int component_id = Integer.parseInt(cIdParam);
 
-		String sIdParam = request.getParameter("source_id");
-		int source_id = Integer.parseInt(sIdParam);
+		//sessionを取得
+		HttpSession session = request.getSession(false);
+		//sessionに保存したsourceIdを取得
+		int sourceId = (int) session.getAttribute("sourceId");
 
 		Dao dao = new Dao();
 
-		String Component_Code = dao.getComponentCode(component_id, source_id);
-		
-		String Code = "public class Sample1 {\n public static void main(String[] args){\n" + Component_Code + "\n} \n}";
+		String Component_Code = dao.getComponentCode(component_id, sourceId);
 
-		System.out.println(Code);
+		String Code = "public class Sample1 {\n public static void main(String[] args){\n" + Component_Code + "\n} \n}";
 
 		// 変数名を空欄に置き換える
 		String hintCode = Main2.replaceVariables(Code);
-		
+
 		// 改行で文字列を分割
 		String[] lines = hintCode.split("\n");
 
@@ -46,13 +47,11 @@ public class ComponentHintPageServlet extends HttpServlet {
 
 		// 2行目から最終行の2行前まで追加
 		for (int i = 3; i < lines.length - 2; i++) {
-		    codeHintBuilder.append(lines[i]).append("\n");
+			codeHintBuilder.append(lines[i]).append("\n");
 		}
 
 		// 最終的な文字列
 		String Code_Hint = codeHintBuilder.toString().trim();
-		
-		System.out.println(Code_Hint);
 
 		// リストをリクエスト属性にセット
 		request.setAttribute("HintCode", Code_Hint);

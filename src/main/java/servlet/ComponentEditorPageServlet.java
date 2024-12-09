@@ -35,10 +35,12 @@ public class ComponentEditorPageServlet extends HttpServlet {
 		}
 
 		List<CodeLine> codeLine = dao.getCodeList(source_id);
+		
+		//sessionにsource_idを保存、このsessionで現在のsource_idが取得できる
+		request.getSession().setAttribute("sourceId" , source_id);
 
 		// リストをリクエスト属性にセット
 		request.setAttribute("CodeList", codeLine);
-		request.setAttribute("SourceId", source_id);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentEditor.jsp");
 		dispatcher.forward(request, response);

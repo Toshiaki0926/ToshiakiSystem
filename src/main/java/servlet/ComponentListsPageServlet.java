@@ -26,15 +26,9 @@ public class ComponentListsPageServlet extends HttpServlet {
 
 		String idParam = request.getParameter("source_id");
 		System.out.println("id: " + idParam);
-		int source_id = -1; // 初期値を設定
-		if (idParam != null) {
-			try {
-				source_id = Integer.parseInt(idParam);
-			} catch (NumberFormatException e) {
-				// パラメータが数値でない場合
-				e.printStackTrace();
-			}
-		}
+		int source_id = Integer.parseInt(idParam);
+		
+		request.getSession().setAttribute("sourceId" , source_id);
 
 		//ソースコードに含まれる部品をすべて取得
 		List<Integer> componentIds = dao.getComponentList(source_id);
@@ -45,7 +39,6 @@ public class ComponentListsPageServlet extends HttpServlet {
 
 		// リストをリクエスト属性にセット
 		request.setAttribute("Components", components);
-		request.setAttribute("SourceId", source_id);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentLists.jsp");
 		dispatcher.forward(request, response);

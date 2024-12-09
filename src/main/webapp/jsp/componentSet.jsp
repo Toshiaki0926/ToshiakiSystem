@@ -35,7 +35,7 @@ pre {
 <body>
 	<h1>コード部品設定</h1>
 
-	<form action="CodeComponentAddServlet" method="POST" accept-charset="UTF-8">
+	<form action="ComponentSetServlet" method="POST" accept-charset="UTF-8">
 		<table>
 			<thead>
 				<tr>
@@ -45,8 +45,6 @@ pre {
 			</thead>
 			<tbody>
 				<%
-				// "source_id" は現在のソースコードid
-				int sourceId = (int) request.getAttribute("source_id");
 				// "Codes" は整形済みのコード全体
 				String codes = (String) request.getAttribute("Codes");
 				// "components" は部品の説明を含むリスト
@@ -81,8 +79,7 @@ pre {
 			</tbody>
 		</table>
 
-		<br> <input type="hidden" name="source_id"
-			value="<%=sourceId%>"><input type="submit"
+		<br> <input type="submit"
 			value="部品設定を保存">
 	</form>
 </body>

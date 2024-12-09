@@ -4,6 +4,7 @@ import java.util.Set;
 
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.ArrayAccessExpr;
+import com.github.javaparser.ast.expr.AssignExpr;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.CastExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
@@ -41,19 +42,19 @@ public class VariableReplacer3 extends VoidVisitorAdapter<Void> {
 			expr.setName("_");
 		});
 	}
-//
-//	@Override
-//	public void visit(AssignExpr assignExpr, Void arg) {
-//		super.visit(assignExpr, arg);
-//		// 代入式の左辺と右辺を置き換え
-//		assignExpr.getTarget().ifNameExpr(expr -> {
-//			expr.setName("_");
-//		});
-//		assignExpr.getValue().ifNameExpr(expr -> {
-//			expr.setName("_");
-//		});
-//	}
-//	
+
+	@Override
+	public void visit(AssignExpr assignExpr, Void arg) {
+		super.visit(assignExpr, arg);
+		// 代入式の左辺と右辺を置き換え
+		assignExpr.getTarget().ifNameExpr(expr -> {
+			expr.setName("_");
+		});
+		assignExpr.getValue().ifNameExpr(expr -> {
+			expr.setName("_");
+		});
+	}
+	
 	@Override
 	public void visit(ArrayAccessExpr arrayAccessExpr, Void arg) {
 	    super.visit(arrayAccessExpr, arg);

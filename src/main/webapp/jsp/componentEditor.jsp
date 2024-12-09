@@ -44,13 +44,12 @@ input[type="submit"] {
 
 	<%
 	List<CodeLine> cList = (List<CodeLine>) request.getAttribute("CodeList");
-	Integer SourceId = (Integer) request.getAttribute("SourceId");
 	%>
 
 	<%
 	if (cList != null && !cList.isEmpty()) {
 	%>
-	<form action="CodeComponentAddPageServlet" method="get">
+	<form action="ComponentSetPageServlet" method="get">
 		<!-- フォームを追加 -->
 		<table>
 			<thead>
@@ -68,7 +67,7 @@ input[type="submit"] {
 				<tr>
 					<td><%=c.getLineNumber()%></td>
 					<td><input type="checkbox" name="selectedCodes"
-						value="<%=c.getLineNumber()%>"></td>
+						value="<%=c.getLineId()%>"></td>
 					<td><%=c.getCode()%></td>
 					<td><%=c.getDescription()%></td>
 				</tr>
@@ -78,8 +77,7 @@ input[type="submit"] {
 			</tbody>
 		</table>
 		<!-- 部品設定ボタン -->
-		<br> <input type="hidden" name="source_id"
-			value="<%=SourceId%>"> <input type="submit"
+		<br> <input type="submit"
 			value="部品設定">
 	</form>
 	<%
