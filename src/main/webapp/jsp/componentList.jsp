@@ -29,10 +29,11 @@
 			<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
 			<input type="submit" value="ヒントを見る">
 		</form>
-		<form action="ComponentListsPageServlet" method="get" style="display: inline;">
+		<form action="ComponentListPageServlet" method="get" style="display: inline;">
 			<input type="submit" value="詳細を見る">
 		</form>
-		<form action="ComponentListsPageServlet" method="get" style="display: inline;">
+		<form action="ComponentSlicePageServlet" method="get" style="display: inline;">
+			<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
 			<input type="submit" value="1行ずつ見る">
 		</form>
 	</div>

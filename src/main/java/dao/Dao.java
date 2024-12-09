@@ -351,7 +351,7 @@ public class Dao extends DriverAccessor{
 		}
 		return components;
 	}
-	
+
 	//ソースコードに含まれる部品を設定し、生成されたlist_idを取得
 	public int insertComponentList(ComponentList component) {
 		this.connection= this.createConnection();
@@ -520,5 +520,120 @@ public class Dao extends DriverAccessor{
 		return componentCode;
 	}
 
+	//source_idとcomponent_idを受け取ると、一致するCodeLineを全て取得
+	public List<Integer> getComponentListIds(int component_id, int source_id) {
+		List<Integer> listIds = new ArrayList<>();
+		this.connection = this.createConnection(); // 接続を生成
+
+		// 接続が成功しているか確認
+		if (this.connection == null) {
+			System.out.println("Database connection failed.");
+			return listIds; // 接続に失敗した場合は空のリストを返す
+		}
+
+		try {
+			String sql = "SELECT list_id FROM component_lists WHERE component_id = ? AND source_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			// 1個目の「?」に値をセット
+			stmt.setInt(1, component_id);
+			// 2個目の「?」に値をセット
+			stmt.setInt(2, source_id);
+
+			ResultSet rs = stmt.executeQuery();
+
+			// ResultSetの処理
+			while (rs.next()) {
+				listIds.add(rs.getInt("list_id"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+		return listIds;
+	}
+
+	//部品idを受け取り、一致する部品のリストを返す
+	public List<Integer> getLineIds(List<Integer> listIds) {
+		List<Integer> lineIds = new ArrayList<>();
+		this.connection = this.createConnection();
+
+		// プレースホルダーを生成（例: "?, ?, ?")
+		StringBuilder placeholders = new StringBuilder();
+		for (int i = 0; i < listIds.size(); i++) {
+			placeholders.append("?");
+			if (i < listIds.size() - 1) {
+				placeholders.append(",");
+			}
+		}
+
+		try {
+			String sql = "SELECT line_id FROM component_lines WHERE list_id IN (" + placeholders + ")";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			// プレースホルダーに値を設定
+			int index = 1;
+			for (int id : listIds) {
+				stmt.setInt(index++, id);
+			}
+
+			// クエリを実行
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lineIds.add(rs.getInt("line_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return lineIds;
+	}
+
+	//部品idを受け取り、一致する部品のリストを返す
+	public List<CodeLine> getSliceComponent(List<Integer> lineIds) {
+		List<CodeLine> codeLines = new ArrayList<>();
+		this.connection = this.createConnection();
+
+		// プレースホルダーを生成（例: "?, ?, ?")
+		StringBuilder placeholders = new StringBuilder();
+		for (int i = 0; i < lineIds.size(); i++) {
+			placeholders.append("?");
+			if (i < lineIds.size() - 1) {
+				placeholders.append(",");
+			}
+		}
+
+		try {
+			String sql = "SELECT * FROM code_lines WHERE line_id IN (" + placeholders + ")";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			// プレースホルダーに値を設定
+			int index = 1;
+			for (int id : lineIds) {
+				stmt.setInt(index++, id);
+			}
+
+			// クエリを実行
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int lineId = rs.getInt("line_id");
+				int lineNumber = rs.getInt("line_number");
+				String code = rs.getString("code");
+				String description = rs.getString("description");
+				
+				CodeLine codeLine = new CodeLine(lineId, lineNumber, code, description);
+				codeLines.add(codeLine);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return codeLines;
+	}
 
 }
