@@ -10,33 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 8px;
-	text-align: left;
-	border: 1px solid #ddd;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-
-input[type="checkbox"] {
-    transform: scale(2);  /* チェックボックスのサイズを1.5倍に */
-    margin: 0;  /* マージン調整 */
-}
-
-input[type="submit"] {
-    padding: 12px 20px;  /* 上下12px、左右20pxの余白 */
-    font-size: 18px;  /* フォントサイズを18pxに */
-    cursor: pointer;  /* ポインタカーソルに変更 */
-}
-</style>
+<link rel="stylesheet" type="text/css" href="./css/componentSlice.css">
 </head>
 <body>
 	<label>部品の行一覧</label>

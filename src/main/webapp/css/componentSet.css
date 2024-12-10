@@ -1,0 +1,44 @@
+@charset "UTF-8";
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 8px;
+	text-align: left;
+	border: 1px solid #ddd;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+pre {
+	margin: 0;
+	white-space: pre-wrap; /* 改行を維持して折り返し */
+	word-wrap: break-word; /* 長い文字列を折り返し */
+}
+
+/* ボタンを中央揃え */
+.button-center {
+    display: flex; /* フレックスボックスで中央揃え */
+    justify-content: center; /* 横方向の中央揃え */
+    margin-top: 20px; /* 上部に間隔を追加 */
+}
+
+/* 送信ボタンのスタイル */
+.button-center input {
+    padding: 12px 20px; /* ボタン内の余白を上下12px、左右20pxに設定 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    margin-top: 20px; /* 上部にマージンを追加して間隔を調整 */
+    background-color: #4CAF50; /* 背景色を戻るボタンと統一 */
+    color: white; /* テキスト色を戻るボタンと統一 */
+    border: none; /* 枠線を削除 */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.button-center input:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色を戻るボタンと統一 */
+}

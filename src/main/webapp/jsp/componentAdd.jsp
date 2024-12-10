@@ -5,17 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Component Add page</title>
+<link rel="stylesheet" href="./css/componentAdd.css">
 </head>
 <body>
-	<h1>部品登録</h1>
-	<form action="ComponentAddServlet" method="post"
-		enctype="multipart/form-data">
-		<label>部品の説明:</label> <input type="text" name="componentDescription"
-			required /><br>
-		<button type="submit">登録</button>
-	</form>
-	<br>
-	<br>
-	<a href="./AdminServlet">戻る</a>
+	<div class="container">
+		<h1>部品登録</h1>
+		<form action="ComponentAddServlet" method="post"
+			enctype="multipart/form-data">
+			<div class="form-group">
+				<label>部品の説明:</label> <input type="text" name="componentDescription"
+					required />
+			</div>
+			<a href="./AdminServlet" class="styled-button">戻る</a>
+			<button type="submit" class="styled-button">登録</button>
+		</form>
+	</div>
 </body>
 </html>

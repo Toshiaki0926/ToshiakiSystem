@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+/* 全体のレイアウト設定 */
+body {
+    font-family: Arial, sans-serif; /* フォントの種類とフォールバック設定 */
+    margin: 0; /* ページ全体の外側マージン */
+    padding: 0; /* ページ全体の内側パディング */
+}
+
+/* ヘッダーのレイアウトとスタイル設定 */
+.header {
+    text-align: center; /* ヘッダー内の要素を中央揃え */
+    margin-top: 20px; /* ヘッダーの上部マージン */
+}
+
+.header label {
+    font-size: 32px; /* ラベルのフォントサイズ */
+    color: #555; /* ラベルの文字色 */
+    font-weight: bold; /* ラベルの文字を太字に設定 */
+}
+
+/* ボタンコンテナの中央揃え */
+.button-container {
+    margin-bottom: 20px; /* ボタンコンテナの下部マージン */
+}
+
+.button-container a {
+    padding: 12px 20px; /* ボタンの内側余白 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    margin: 0 20px; /* ボタンの左右マージン */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    text-decoration: none; /* ボタンのテキスト装飾なし */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.button-container a:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色 */
+}
+
+/* ボタンを中央揃え */
+.button-center {
+    display: flex; /* フレックスボックスで中央揃え */
+    justify-content: center; /* 横方向の中央揃え */
+    margin-top: 20px; /* 上部に間隔を追加 */
+}
+
+/* 送信ボタンのスタイル */
+.button-center input {
+    padding: 12px 20px; /* ボタン内の余白を上下12px、左右20pxに設定 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    margin-top: 20px; /* 上部にマージンを追加して間隔を調整 */
+    background-color: #4CAF50; /* 背景色を戻るボタンと統一 */
+    color: white; /* テキスト色を戻るボタンと統一 */
+    border: none; /* 枠線を削除 */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.button-center input:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色を戻るボタンと統一 */
+}
+
+/* テーブルのスタイル設定 */
+table {
+    width: 100%; /* テーブルの幅を親要素いっぱいに設定 */
+    border-collapse: collapse; /* セル間の余白をなくして結合 */
+}
+
+th, td {
+    padding: 8px; /* セル内の余白を設定 */
+    text-align: left; /* セル内のテキストを左揃え */
+    border: 1px solid #ddd; /* セルの枠線を薄い灰色で設定 */
+}
+
+th {
+    background-color: #f2f2f2; /* ヘッダーセルの背景色 */
+}
+
+/* チェックボックスのスタイル設定 */
+input[type="checkbox"] {
+    transform: scale(2); /* チェックボックスのサイズを2倍に拡大 */
+    margin: 0; /* チェックボックスの外側マージンをリセット */
+}
+
+/* 送信ボタンのスタイル設定 */
+input[type="submit"] {
+    padding: 12px 20px; /* ボタン内の余白を上下12px、左右20pxに設定 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    cursor: pointer; /* ボタン上でポインタカーソルに変更 */
+}

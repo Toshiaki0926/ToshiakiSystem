@@ -4,18 +4,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>File Add page</title>
+<title>File Add Page</title>
+<link rel="stylesheet" type="text/css" href="./css/javaAdd.css">
 </head>
 <body>
-	<h1>Javaファイル登録</h1>
-	<form action="JavaAddServlet" method="post"
-		enctype="multipart/form-data">
-		<label>ファイル選択:</label> <input type="file" name="javaFile" required /><br>
-		<label>ファイル名:</label> <input type="text" name="fileName" required /><br>
-		<button type="submit">登録</button>
-	</form>
-	<br>
-	<br>
-	<a href="./AdminServlet">戻る</a>
+	<div class="container">
+		<h1>Javaファイル登録</h1>
+		<form action="JavaAddServlet" method="post"
+			enctype="multipart/form-data">
+			<div class="form-group">
+				<label>ファイル選択:</label> <input type="file" name="javaFile" required />
+			</div>
+			<div class="form-group">
+				<label>ファイル名:</label> <input type="text" name="fileName" required />
+			</div>
+			<a href="./AdminServlet" class="styled-button">戻る</a>
+			<button type="submit" class="styled-button">登録</button>
+		</form>
+	</div>
 </body>
 </html>

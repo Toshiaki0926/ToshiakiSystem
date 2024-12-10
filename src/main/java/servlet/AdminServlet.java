@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Component;
 import beans.Source_file;
 import dao.Dao;
 
@@ -27,9 +28,11 @@ public class AdminServlet extends HttpServlet {
 		// Daoクラスから登録されたコードのリストを取得
 		Dao dao = new Dao();
 		List<Source_file> sourceList = dao.getSourceList();
+		List<Component> componentList = dao.getComponentList();
 
 		// リストをリクエスト属性にセット
 		request.setAttribute("SourceList", sourceList);
+		request.setAttribute("ComponentList", componentList);
 
 		// javaList.jspへフォワード
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/admin.jsp");

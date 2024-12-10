@@ -224,6 +224,39 @@ public class Dao extends DriverAccessor{
 		return sourceList;
 	}
 
+	//部品のリストを取得
+	public List<Component> getComponentList() {
+		List<Component> componentList = new ArrayList<>();
+		this.connection = this.createConnection();
+
+		// 接続が成功しているか確認
+		if (this.connection == null) {
+			System.out.println("Database connection failed.");
+			return componentList; // 接続に失敗した場合は空のリストを返す
+		}
+
+		try {
+			String sql = "SELECT * FROM components";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+
+			// ResultSetの処理
+			while (rs.next()) {
+				// DBから取得した値を引数としてCodeを作成
+				Component c = new Component(rs.getInt("component_id"), rs.getString("component_description"));
+				// 返り値用リストに追加
+				componentList.add(c);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return componentList;
+	}
+
 	//1行ずつのコードをテーブルに保存
 	public void insertCodeLines(List<CodeLine> codeLines, int sourceId) {
 		this.connection = this.createConnection();

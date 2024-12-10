@@ -1,0 +1,142 @@
+@charset "UTF-8";
+/* 全体のレイアウト調整 */
+body {
+    font-family: Arial, sans-serif; /* フォント設定 */
+    margin: 0; /* マージン設定 */
+    padding: 0; /* パディング設定 */
+}
+
+.header {
+    text-align: center; /* ヘッダーのテキスト配置 */
+    margin-top: 20px; /* ヘッダーの上部マージン */
+}
+
+.header label {
+    font-size: 32px; /* ヘッダーラベルのフォントサイズ */
+    color: #555; /* ヘッダーラベルの色 */
+    font-weight: bold; /* ヘッダーラベルの太字設定 */
+}
+
+.button-container {
+    text-align: center; /* ボタンコンテナのテキスト配置 */
+    margin-bottom: 20px; /* ボタンコンテナの下部マージン */
+}
+
+.button-container a {
+    padding: 18px 30px; /* ボタンの内側余白 */
+    font-size: 27px; /* ボタンのフォントサイズ */
+    margin: 0 30px; /* ボタンの左右マージン */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    text-decoration: none; /* ボタンのテキスト装飾なし */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.button-container a:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色 */
+}
+
+/* コンテンツ部分（左側と右側の配置） */
+.content {
+    display: flex; /* フレックスボックスによるレイアウト */
+    justify-content: space-between; /* コンテンツの左右配置 */
+    margin: 20px; /* コンテンツ全体のマージン */
+}
+
+.section-title {
+    font-size: 36px; /* セクションタイトルのフォントサイズ */
+    font-weight: bold; /* セクションタイトルの太字設定 */
+}
+.section-element {
+    font-size: 20px; /* セクション要素のフォントサイズ */
+    color: #555; /* セクション要素の文字色 */
+}
+
+/* 左側の部品一覧 */
+.left-sidebar {
+    width: 45%; /* 左サイドバーの幅 */
+    padding: 10px; /* 左サイドバーの内側余白 */
+    background-color: rgb(191, 217, 255); /* 左サイドバーの背景色 */
+    border-radius: 5px; /* 左サイドバーの角丸 */
+}
+
+.left-sidebar ul {
+    list-style-type: none; /* リストのマーカーを無効化 */
+    padding: 0; /* リストのパディングを無効化 */
+}
+
+.left-sidebar li {
+    margin-bottom: 10px; /* リスト項目間のマージン */
+}
+
+.left-sidebar form {
+    display: inline; /* フォーム要素をインライン表示 */
+}
+
+.left-sidebar label {
+    font-weight: bold; /* ラベルの太字設定 */
+}
+
+.left-sidebar p {
+    color: #777; /* テキストの色を少し薄くする */
+}
+
+/* 右側のソースコード一覧 */
+.right-sidebar {
+    width: 45%; /* 右サイドバーの幅 */
+    padding: 10px; /* 右サイドバーの内側余白 */
+    background-color: rgb(255, 235, 191); /* 右サイドバーの背景色 */
+    border-radius: 5px; /* 右サイドバーの角丸 */
+}
+
+.right-sidebar ul {
+    list-style-type: none; /* リストのマーカーを無効化 */
+    padding: 0; /* リストのパディングを無効化 */
+}
+
+.right-sidebar li {
+    margin-bottom: 10px; /* リスト項目間のマージン */
+}
+
+.right-sidebar form {
+    display: inline; /* フォーム要素をインライン表示 */
+}
+
+.right-sidebar label {
+    font-weight: bold; /* ラベルの太字設定 */
+}
+
+.right-sidebar p {
+    color: #777; /* テキストの色を少し薄くする */
+}
+
+/* 既存のスタイルを利用してボタンを右側に配置するための調整 */
+.component-item {
+    display: flex; /* フレックスボックスによるレイアウト */
+    justify-content: space-between; /* アイテム間のスペース */
+    align-items: center; /* アイテムを中央に揃える */
+}
+
+.component-item label {
+    font-weight: bold; /* ラベルの太字設定 */
+    margin-right: 10px; /* ラベルとボタンの間にマージン */
+}
+
+.component-item form {
+    margin: 0; /* フォーム要素のマージンをゼロに設定 */
+}
+
+/* 編集・部品設定ボタンのスタイル */
+.component-item input[type="submit"] {
+    padding: 10px 15px; /* ボタンの内側余白 */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    border: none; /* ボーダーなし */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.component-item input[type="submit"]:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色 */
+}

@@ -9,28 +9,7 @@
 <html>
 <head>
 <title>コード部品設定</title>
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 8px;
-	text-align: left;
-	border: 1px solid #ddd;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-
-pre {
-	margin: 0;
-	white-space: pre-wrap; /* 改行を維持して折り返し */
-	word-wrap: break-word; /* 長い文字列を折り返し */
-}
-</style>
+<link rel="stylesheet" type="text/css" href="./css/componentSet.css">
 </head>
 <body>
 	<h1>コード部品設定</h1>
@@ -65,7 +44,8 @@ pre {
 							%>
 					</select></td>
 				</tr>
-				<input type="hidden" name="codes" value="<%=EscapeHtml.escapeHtml(codes)%>">
+				<input type="hidden" name="codes"
+					value="<%=EscapeHtml.escapeHtml(codes)%>">
 				<!-- codes を送信 -->
 				<%
 				} else {
@@ -78,9 +58,9 @@ pre {
 				%>
 			</tbody>
 		</table>
-
-		<br> <input type="submit"
-			value="部品設定を保存">
+		<div class="button-center">
+			<input type="submit" value="部品設定を保存">
+		</div>
 	</form>
 </body>
 </html>

@@ -8,38 +8,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Code list page</title>
-<style>
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 8px;
-	text-align: left;
-	border: 1px solid #ddd;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-
-input[type="checkbox"] {
-    transform: scale(2);  /* チェックボックスのサイズを1.5倍に */
-    margin: 0;  /* マージン調整 */
-}
-
-input[type="submit"] {
-    padding: 12px 20px;  /* 上下12px、左右20pxの余白 */
-    font-size: 18px;  /* フォントサイズを18pxに */
-    cursor: pointer;  /* ポインタカーソルに変更 */
-}
-</style>
+<title>コード行一覧ページ</title>
+<link rel="stylesheet" type="text/css" href="./css/componentEditor.css">
 </head>
 <body>
-	<label>コード行一覧</label>
+	<div class="header">
+		<label>コード行一覧</label>
+	</div>
 	<br>
+	<div class="button-container">
+		<a href="./AdminServlet">戻る</a>
+	</div>
 	<br>
 
 	<%
@@ -76,9 +55,9 @@ input[type="submit"] {
 				%>
 			</tbody>
 		</table>
-		<!-- 部品設定ボタン -->
-		<br> <input type="submit"
-			value="部品設定">
+		<div class="button-center">
+			<input type="submit" value="部品設定">
+		</div>
 	</form>
 	<%
 	} else {
