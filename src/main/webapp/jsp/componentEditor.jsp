@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="header">
-		<label>コード行一覧</label>
+		<h1>コード行一覧</h1>
 	</div>
 	<br>
 	<div class="button-container">

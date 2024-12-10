@@ -1,4 +1,18 @@
 @charset "UTF-8";
+
+/* ヘッダーのスタイル */
+.header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #555;
+    font-weight: bold;
+    text-align: center; /* 直接中央揃えを設定 */
+}
+
 table {
 	width: 100%;
 	border-collapse: collapse;

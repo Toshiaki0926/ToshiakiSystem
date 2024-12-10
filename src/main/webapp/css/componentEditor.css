@@ -13,13 +13,13 @@ body {
     margin-top: 20px; /* ヘッダーの上部マージン */
 }
 
-.header label {
+.header h1 {
     font-size: 32px; /* ラベルのフォントサイズ */
     color: #555; /* ラベルの文字色 */
     font-weight: bold; /* ラベルの文字を太字に設定 */
 }
 
-/* ボタンコンテナの中央揃え */
+/* 戻るボタンの設定 */
 .button-container {
     margin-bottom: 20px; /* ボタンコンテナの下部マージン */
 }
@@ -39,7 +39,7 @@ body {
     background-color: #45a049; /* ボタンのホバー時背景色 */
 }
 
-/* ボタンを中央揃え */
+/* 部品設定ボタンの設定 */
 .button-center {
     display: flex; /* フレックスボックスで中央揃え */
     justify-content: center; /* 横方向の中央揃え */

@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="header">
-		<label>管理ページ</label>
+		<h1>管理ページ</h1>
 	</div>
 	<br>
 	<br>

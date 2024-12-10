@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <%@page import="java.util.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="beans.CodeLine"%>
@@ -13,7 +13,9 @@
 <link rel="stylesheet" type="text/css" href="./css/componentSlice.css">
 </head>
 <body>
-	<label>部品の行一覧</label>
+	<div class="header">
+		<h1>部品の行一覧</h1>
+	</div>
 	<br>
 	<br>
 

@@ -8,35 +8,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Code list page</title>
+<title>問題一覧</title>
+<link rel="stylesheet" type="text/css" href="./css/javaList.css">
 </head>
 <body>
-	<label>問題一覧</label>
-	<br>
+	<div class="header">
+		<h1>問題一覧</h1>
+	</div>
 	<br>
 
-	<% List<Source_file> sList = (List<Source_file>)request.getAttribute("SourceList"); %>
+	<%
+	List<Source_file> sList = (List<Source_file>) request.getAttribute("SourceList");
+	%>
 
-	<% 
-        if (sList != null) { 
-            for (Source_file s : sList) { 
-    %>
-	<div>
-		<label><%= s.getSource_Name() %></label>
-		<!-- コード表示ボタンを配置 -->
-		<form action="ComponentListPageServlet" method="get" style="display: inline;">
-			<input type="hidden" name="source_id" value="<%= s.getSource_Id() %>">
+	<%
+	if (sList != null) {
+		for (Source_file s : sList) {
+	%>
+	<div class="problem-container">
+		<label><%=s.getSource_Name()%></label>
+		<form action="ComponentListPageServlet" method="get">
+			<input type="hidden" name="source_id" value="<%=s.getSource_Id()%>">
 			<input type="submit" value="部品を表示">
 		</form>
 	</div>
-	<br>
-	<% 
-            }
-        } else {
-    %>
-	<p>登録されたコードがありません。</p>
-	<% 
-        } 
-    %>
+	<%
+	}
+	} else {
+	%>
+	<p style="text-align: center;">登録されたコードがありません。</p>
+	<%
+	}
+	%>
 </body>
 </html>

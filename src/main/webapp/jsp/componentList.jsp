@@ -8,10 +8,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Component list page</title>
+<title>部品一覧</title>
+<link rel="stylesheet" type="text/css" href="./css/componentList.css">
 </head>
 <body>
-	<label>部品一覧</label>
+	<div class="header">
+		<h1>部品一覧</h1>
+	</div>
 	<br>
 	<br>
 
@@ -22,7 +25,7 @@
         if (components != null) { 
             for (Component c : components) { 
     %>
-	<div>
+	<div class="problem-container">
 		<label><%= c.getComponent_description() %></label>
 		<!-- コード表示ボタンを配置 -->
 		<form action="ComponentHintPageServlet" method="get" style="display: inline;">

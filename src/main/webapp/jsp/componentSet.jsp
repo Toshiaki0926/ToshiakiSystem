@@ -12,7 +12,9 @@
 <link rel="stylesheet" type="text/css" href="./css/componentSet.css">
 </head>
 <body>
-	<h1>コード部品設定</h1>
+	<div class="header">
+		<h1>コード部品設定</h1>
+	</div>
 
 	<form action="ComponentSetServlet" method="POST" accept-charset="UTF-8">
 		<table>

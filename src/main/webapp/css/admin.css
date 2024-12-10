@@ -11,7 +11,7 @@ body {
     margin-top: 20px; /* ヘッダーの上部マージン */
 }
 
-.header label {
+.header h1 {
     font-size: 32px; /* ヘッダーラベルのフォントサイズ */
     color: #555; /* ヘッダーラベルの色 */
     font-weight: bold; /* ヘッダーラベルの太字設定 */

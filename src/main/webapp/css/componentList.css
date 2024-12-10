@@ -1,1 +1,50 @@
 @charset "UTF-8";
+
+/* ヘッダーのスタイル */
+.header {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #555;
+    font-weight: bold;
+}
+
+/* 問題リスト全体のスタイル */
+.problem-container {
+    display: flex; /* Flexbox を利用 */
+    justify-content: center; /* 水平方向中央揃え */
+    align-items: center; /* 垂直方向中央揃え */
+    margin: 20px 0; /* 各アイテム間のマージン */
+}
+
+/* ボタンのスタイル */
+.problem-container form {
+    margin-right: 10px; /* 各ボタン間のスペースを追加 */
+}
+
+/* ラベルのスタイル */
+.problem-container label {
+    font-size: 24px;
+    margin-right: 15px; /* ラベルとボタンの間のスペース */
+    color: #333; /* ラベルの文字色 */
+    width: 300px; /* ラベルの固定幅を設定 */
+    text-align: left; /* テキストを左揃え */
+}
+
+/* ボタンのスタイル */
+.problem-container input[type="submit"] {
+    padding: 10px 20px; /* ボタン内の余白 */
+    font-size: 16px; /* ボタンのフォントサイズ */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンの文字色 */
+    border: none; /* ボタンの枠線を削除 */
+    border-radius: 5px; /* ボタンの角を丸く */
+    cursor: pointer; /* ホバー時のカーソル */
+}
+
+.problem-container input[type="submit"]:hover {
+    background-color: #45a049; /* ボタンホバー時の背景色 */
+}
