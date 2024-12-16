@@ -1,4 +1,4 @@
-package servlet;
+package servlet.t;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Component;
 import beans.Source_file;
 import dao.Dao;
 
-@WebServlet("/JavaListServlet")
-public class JavaListServlet extends HttpServlet {
+@WebServlet("/AdminServlet")
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     //POSTアクセスされた場合は，doGetに丸投げ
@@ -27,12 +28,14 @@ public class JavaListServlet extends HttpServlet {
 		// Daoクラスから登録されたコードのリストを取得
 		Dao dao = new Dao();
 		List<Source_file> sourceList = dao.getSourceList();
+		List<Component> componentList = dao.getComponentList();
 
 		// リストをリクエスト属性にセット
 		request.setAttribute("SourceList", sourceList);
+		request.setAttribute("ComponentList", componentList);
 
 		// javaList.jspへフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/javaList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/admin.jsp");
 		dispatcher.forward(request, response);
 	}
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Component Add page</title>
+<title>部品登録</title>
 <link rel="stylesheet" href="./css/componentAdd.css">
 </head>
 <body>

@@ -1,42 +1,72 @@
 [
     {
         "line_number": 1,
-        "code": "System.out.println(\"キーボードから入力してください\");",
-        "description": "「キーボードから入力してください」と標準出力に出力する"
+        "code": "int[] score = new int[6];",
+        "description": "要素数6の整数型配列scoreを宣言し、初期化する"
     },
     {
         "line_number": 2,
-        "code": "int num = new java.util.Scanner(System.in).nextInt();",
-        "description": "標準入力から整数を読み込み、num変数に格納する"
+        "code": "int total = 0;",
+        "description": "整数の変数totalを宣言し、0で初期化する"
     },
     {
-        "line_number": 4,
-        "code": "if(num < 10) {",
-        "description": "numが10未満かどうかを判定する"
+        "line_number": 3,
+        "code": "double average;",
+        "description": "double型の変数averageを宣言する"
     },
     {
         "line_number": 5,
-        "code": "num = num + 10 + 20 + 30;",
-        "description": "numに10, 20, 30を加算する"
+        "code": "score[0] = 86;",
+        "description": "score配列の0番目に86を代入する"
+    },
+    {
+        "line_number": 6,
+        "code": "score[1] = 74;",
+        "description": "score配列の1番目に74を代入する"
     },
     {
         "line_number": 7,
-        "code": "} else {",
-        "description": "numが10以上の場合の処理を開始する"
+        "code": "score[2] = 91;",
+        "description": "score配列の2番目に91を代入する"
     },
     {
         "line_number": 8,
-        "code": "num = num - 1 - 2 - 3;",
-        "description": "numから1, 2, 3を減算する"
+        "code": "score[3] = 59;",
+        "description": "score配列の3番目に59を代入する"
+    },
+    {
+        "line_number": 9,
+        "code": "score[4] = 100;",
+        "description": "score配列の4番目に100を代入する"
     },
     {
         "line_number": 10,
-        "code": "}",
-        "description": "if-else文の終了"
+        "code": "score[5] = 41;",
+        "description": "score配列の5番目に41を代入する"
     },
     {
-        "line_number": 11,
-        "code": "System.out.println(num);",
-        "description": "numの値を標準出力に出力する"
+        "line_number": 12,
+        "code": "for(int i = 0 ; i < score.length ; i++) {",
+        "description": "iを0からscore配列の長さ未満まで繰り返すループを開始する"
+    },
+    {
+        "line_number": 13,
+        "code": "total += score[i];",
+        "description": "totalにscore配列のi番目の要素を加算する"
+    },
+    {
+        "line_number": 14,
+        "code": "}",
+        "description": "forループの終了"
+    },
+    {
+        "line_number": 15,
+        "code": "average = (double)total / score.length;",
+        "description": "totalをdouble型にキャストしてscore配列の長さで除算し、averageに代入する"
+    },
+    {
+        "line_number": 17,
+        "code": "System.out.println(average);",
+        "description": "averageの値をコンソールに出力する"
     }
 ]

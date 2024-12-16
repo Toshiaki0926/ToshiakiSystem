@@ -36,7 +36,7 @@
 				<li>
 					<div class="component-item">
 						<label class="section-element"><%= c.getComponent_description() %></label>
-						<form action="ComponentEditorPageServlet" method="get" style="display: inline;">
+						<form action="UpdateComponentPageServlet" method="get" style="display: inline;">
 							<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
 							<input type="submit" value="編集">
 						</form>

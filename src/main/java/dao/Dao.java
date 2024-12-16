@@ -100,6 +100,41 @@ public class Dao extends DriverAccessor{
 		}
 	}
 
+	//component_idに一致する部品を取得
+	public Component getComponentById(int component_id) {
+		Component component = new Component();
+
+		this.connection = this.createConnection();
+
+		try{
+			String sql = "select * from components where component_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			stmt.setInt(1, component_id);
+
+			ResultSet rs = stmt.executeQuery();
+
+			if(rs.first()){
+				component.setComponent_id( rs.getInt("component_id") );
+				component.setComponent_description( rs.getString("component_description") );
+			}
+			else{
+				this.closeConnection(this.connection);
+				return null;
+			}
+
+		}catch(SQLException e){
+			this.closeConnection(this.connection);
+			e.printStackTrace();
+			return null;
+
+		} finally {
+			this.closeConnection(this.connection);
+		}
+
+		return component;
+	}
+
 	public Source_file getSource_Code(int source_id) {
 		Source_file source_code = new Source_file();
 		this.connection = this.createConnection();
@@ -670,5 +705,59 @@ public class Dao extends DriverAccessor{
 
 		return codeLines;
 	}
+
+	//Userを受け取り，同一userIdのデータをアップデートする
+	public void updateComponent(Component component) {
+		this.connection= this.createConnection();
+
+		try{
+			//SQL文を定義
+			//?には後で値を入れる．
+			String sql = "update components set component_description=? where component_id=?";
+			//SQL文からPreparedStatementを生成
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			//1個目の「?」に値をセット
+			stmt.setString(1, component.getComponent_description() );
+			//2個目の「?」に値をセット
+			stmt.setInt(2, component.getComponent_id());
+
+			//SQL文を実行
+			stmt.executeUpdate();
+
+			stmt.close();
+			this.closeConnection(connection);
+		}catch(SQLException e){
+			this.closeConnection(connection);
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(connection);
+		}
+	}
+	
+	//Userを受け取り，同一userIdのデータをアップデートする
+		public void deleteComponent(int componentId) {
+			this.connection= this.createConnection();
+
+			try{
+				String sql = "DELETE FROM components WHERE component_id = ?";
+				//SQL文からPreparedStatementを生成
+				PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+				//1個目の「?」に値をセット
+				stmt.setInt(1, componentId);
+
+				//SQL文を実行
+				stmt.executeUpdate();
+
+				stmt.close();
+				this.closeConnection(connection);
+			}catch(SQLException e){
+				this.closeConnection(connection);
+				e.printStackTrace();
+			} finally {
+				this.closeConnection(connection);
+			}
+		}
 
 }

@@ -1,4 +1,4 @@
-package servlet;
+package servlet.t;
 
 import java.io.IOException;
 
@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/ComponentAddPageServlet")
+@WebServlet("/JavaAddPageServlet")
 @MultipartConfig
-public class ComponentAddPageServlet extends HttpServlet {
+public class JavaAddPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// componentAdd.jspを表示
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentAdd.jsp");
+		// JavaAdd.jspを表示
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/javaAdd.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//doGetと同じ動作をしたいので，丸投げ
-		doGet(request, response);
+		//doPostと同じ動作をしたいので，丸投げ
+				doGet(request, response);
 	}
 }
