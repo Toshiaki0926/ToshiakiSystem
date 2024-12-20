@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import beans.Component;
 import dao.Dao;
 
-@WebServlet("/UpdateComponentPageServlet")
-public class UpdateComponentPageServlet extends HttpServlet {
+@WebServlet("/EditComponentPageServlet")
+public class EditComponentPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -31,7 +31,7 @@ public class UpdateComponentPageServlet extends HttpServlet {
 		
 		request.setAttribute("component" , component);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/updateComponent.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/t/editComponent.jsp");
 		dispatcher.forward(request, response);
 	}
 }

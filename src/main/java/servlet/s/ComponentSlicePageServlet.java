@@ -43,12 +43,12 @@ public class ComponentSlicePageServlet extends HttpServlet {
 		List<Integer> lineIds = dao.getLineIds(componentListIds);
 		
 		//line_idに一致するコードと説明を取得
-		List<CodeLine> SliceComponent = dao.getSliceComponent(lineIds);
+		List<CodeLine> sliceComponent = dao.getSliceComponent(lineIds);
 
 		// リストをリクエスト属性にセット
-		request.setAttribute("SliceComponent", SliceComponent);
+		request.setAttribute("SliceComponent", sliceComponent);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentSlice.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/componentSlice.jsp");
 		dispatcher.forward(request, response);
 	}
 

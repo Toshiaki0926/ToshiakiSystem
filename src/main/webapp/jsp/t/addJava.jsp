@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>File Add Page</title>
-<link rel="stylesheet" type="text/css" href="./css/javaAdd.css">
+<link rel="stylesheet" type="text/css" href="./css/addJava.css">
 </head>
 <body>
 	<div class="container">
 		<h1>Javaファイル登録</h1>
-		<form action="JavaAddServlet" method="post"
+		<form action="AddJavaServlet" method="post"
 			enctype="multipart/form-data">
 			<div class="form-group">
 				<label>ファイル選択:</label> <input type="file" name="javaFile" required />

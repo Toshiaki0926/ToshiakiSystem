@@ -17,9 +17,9 @@ import beans.Source_file;
 import dao.Dao;
 import divide.PythonExecutor;
 
-@WebServlet("/JavaAddServlet")
+@WebServlet("/AddJavaServlet")
 @MultipartConfig
-public class JavaAddServlet extends HttpServlet {
+public class AddJavaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,12 +46,12 @@ public class JavaAddServlet extends HttpServlet {
 
 		// Daoを使ってデータベースに保存
 		Dao dao = new Dao();
-		Source_file source_code = new Source_file();
-		source_code.setSource_Name(fileName); // ファイル名を設定
-		source_code.setSource_Code(fileContent.toString()); // ファイルの内容を設定
+		Source_file sourceCode = new Source_file();
+		sourceCode.setSource_Name(fileName); // ファイル名を設定
+		sourceCode.setSource_Code(fileContent.toString()); // ファイルの内容を設定
 
 		//ファイルとファイル名を保存
-		int sourceId = dao.insertSource_Code2(source_code); // データベースに保存し、生成されたsource_idを取得
+		int sourceId = dao.insertSource_Code2(sourceCode); // データベースに保存し、生成されたsource_idを取得
 		PythonExecutor.parseCodeToJson(fileContent.toString(), sourceId);
 
 		// 保存完了後、リダイレクトしてAdminページに戻る

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.Dao;
 
-@WebServlet("/ComponentAddServlet")
+@WebServlet("/AddComponentServlet")
 @MultipartConfig
-public class ComponentAddServlet extends HttpServlet {
+public class AddComponentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,6 +38,6 @@ public class ComponentAddServlet extends HttpServlet {
 		dao.insertComponent(componentDescription);
 
 		// リダイレクトして同じページに戻る
-		response.sendRedirect("ComponentAddPageServlet");
+		response.sendRedirect("AddComponentPageServlet");
 	}
 }

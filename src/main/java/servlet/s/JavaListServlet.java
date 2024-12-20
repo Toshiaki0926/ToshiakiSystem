@@ -32,7 +32,7 @@ public class JavaListServlet extends HttpServlet {
 		request.setAttribute("SourceList", sourceList);
 
 		// javaList.jspへフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/javaList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/javaList.jsp");
 		dispatcher.forward(request, response);
 	}
 }

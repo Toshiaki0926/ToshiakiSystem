@@ -17,8 +17,8 @@
 	<br>
 	<br>
 	<div class="button-container">
-		<a href="./ComponentAddPageServlet">部品追加</a>
-		<a href="./JavaAddPageServlet">問題追加</a>
+		<a href="./AddComponentPageServlet">部品追加</a>
+		<a href="./AddJavaPageServlet">問題追加</a>
 	</div>
 	
 	<div class="content">
@@ -36,7 +36,7 @@
 				<li>
 					<div class="component-item">
 						<label class="section-element"><%= c.getComponent_description() %></label>
-						<form action="UpdateComponentPageServlet" method="get" style="display: inline;">
+						<form action="EditComponentPageServlet" method="get" style="display: inline;">
 							<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
 							<input type="submit" value="編集">
 						</form>
@@ -69,7 +69,7 @@
 				<li>
 					<div class="component-item">
 						<label class="section-element"><%= s.getSource_Name() %></label>
-						<form action="ComponentEditorPageServlet" method="get" style="display: inline;">
+						<form action="SelectCodeLinePageServlet" method="get" style="display: inline;">
 							<input type="hidden" name="source_id" value="<%= s.getSource_Id() %>">
 							<input type="submit" value="部品を表示">
 						</form>

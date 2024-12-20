@@ -260,7 +260,7 @@ public class Dao extends DriverAccessor{
 	}
 
 	//部品のリストを取得
-	public List<Component> getComponentList() {
+	public List<Component> getComponents() {
 		List<Component> componentList = new ArrayList<>();
 		this.connection = this.createConnection();
 
@@ -354,8 +354,8 @@ public class Dao extends DriverAccessor{
 	}
 
 
-	//lineIdsの配列を受け取ると、該当する行のcode全てを取得
-	public List<String> getCodeLines(List<Integer> lineIds, int sourceId) {
+	//lineIdsの配列を受け取ると、該当する行のcode全てをString型のリストで取得
+	public List<String> getCodeLines(List<Integer> lineIds) {
 		List<String> codeLines = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
@@ -375,12 +375,11 @@ public class Dao extends DriverAccessor{
 			}
 
 			// 動的に SQL 文を構築
-			String sql = "SELECT code FROM code_lines WHERE source_id = ? AND line_id IN (" + placeholders + ")";
+			String sql = "SELECT code FROM code_lines WHERE line_id IN (" + placeholders + ")";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 
 			// パラメータを設定
-			stmt.setInt(1, sourceId);
-			int index = 2; // sourceId に続くパラメータのインデックス
+			int index = 1; // sourceId に続くパラメータのインデックス
 			for (int lineId : lineIds) {
 				stmt.setInt(index++, lineId);
 			}
@@ -399,8 +398,58 @@ public class Dao extends DriverAccessor{
 		return codeLines; // 結果を返す
 	}
 
+	//lineIdsの配列を受け取ると、該当する行のcode全てをCodeLine型のリストで取得
+	public List<CodeLine> getComponentLines(List<Integer> lineIds) {
+		List<CodeLine> componentLines = new ArrayList<>();
+		this.connection = this.createConnection(); // 接続を生成
+
+		if (this.connection == null) {
+			System.out.println("Database connection failed.");
+			return componentLines; // 接続に失敗した場合は空のリストを返す
+		}
+
+		try {
+			// プレースホルダーを生成 (例: "?, ?, ?")
+			StringBuilder placeholders = new StringBuilder();
+			for (int i = 0; i < lineIds.size(); i++) {
+				placeholders.append("?");
+				if (i < lineIds.size() - 1) {
+					placeholders.append(", ");
+				}
+			}
+
+			// 動的に SQL 文を構築
+			String sql = "SELECT * FROM code_lines WHERE line_id IN (" + placeholders + ")";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			// パラメータを設定
+			int index = 1;
+			for (int lineId : lineIds) {
+				stmt.setInt(index++, lineId);
+			}
+
+			// クエリを実行
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int lineId = rs.getInt("line_id");
+				int lineNum = rs.getInt("line_number");
+				String code = rs.getString("code");
+				String description = rs.getString("description");
+				
+				CodeLine codeLine = new CodeLine(lineId, lineNum, code, description);
+				componentLines.add(codeLine); // 結果をリストに追加
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return componentLines; // 結果を返す
+	}
+
 	//部品の説明を取得
-	public List<Component> getComponents() {
+	public List<Component> getComponentDescriptions() {
 		List<Component> components = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
@@ -495,8 +544,8 @@ public class Dao extends DriverAccessor{
 		}
 	}
 
-	//ソースコードに含まれる親がない部品のリストを取得
-	public List<Integer> getComponentList(int source_id) {
+	//ソースコードに含まれる親がない部品（parent_idがnullの部品）のリストを取得
+	public List<Integer> getPNComponentList(int source_id) {
 		List<Integer> componentIds = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
@@ -518,6 +567,37 @@ public class Dao extends DriverAccessor{
 			this.closeConnection(this.connection);
 		}
 		return componentIds;
+	}
+
+	//ソースコードに含まれる部品のリストを取得
+	public List<ComponentList> getComponentList(int source_id) {
+		List<ComponentList> components = new ArrayList<>();
+		this.connection = this.createConnection(); // 接続を生成
+
+		try {
+			String sql = "SELECT * FROM component_lists WHERE source_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			// 1個目の「?」に値をセット
+			stmt.setInt(1, source_id);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int listId = rs.getInt("list_id");
+				int componentId = rs.getInt("component_id");
+				int sourceId = rs.getInt("source_id");
+				Integer parentId = (Integer) rs.getObject("parent_id");
+				String componentCode = rs.getString("component_code");
+
+				ComponentList component = new ComponentList(listId, componentId, sourceId, parentId, componentCode);;
+				components.add(component);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(this.connection);
+		}
+		return components;
 	}
 
 	//部品idを受け取り、一致する部品のリストを返す
@@ -662,6 +742,30 @@ public class Dao extends DriverAccessor{
 		return lineIds;
 	}
 
+	//部品のlist_idに一致するline_idを全て取得
+	public List<Integer> getComponentLineIds(int listId) {
+		List<Integer> lineIds = new ArrayList<>();
+		this.connection = this.createConnection();
+
+		try {
+			String sql = "SELECT line_id FROM component_lines WHERE list_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			stmt.setInt(1, listId);
+
+			// クエリを実行
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lineIds.add(rs.getInt("line_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+		return lineIds;
+	}
+
 	//部品idを受け取り、一致する部品のリストを返す
 	public List<CodeLine> getSliceComponent(List<Integer> lineIds) {
 		List<CodeLine> codeLines = new ArrayList<>();
@@ -706,7 +810,7 @@ public class Dao extends DriverAccessor{
 		return codeLines;
 	}
 
-	//Userを受け取り，同一userIdのデータをアップデートする
+	//部品を受け取り，データをアップデートする
 	public void updateComponent(Component component) {
 		this.connection= this.createConnection();
 
@@ -734,30 +838,55 @@ public class Dao extends DriverAccessor{
 			this.closeConnection(connection);
 		}
 	}
-	
-	//Userを受け取り，同一userIdのデータをアップデートする
-		public void deleteComponent(int componentId) {
-			this.connection= this.createConnection();
 
-			try{
-				String sql = "DELETE FROM components WHERE component_id = ?";
-				//SQL文からPreparedStatementを生成
-				PreparedStatement stmt = this.connection.prepareStatement(sql);
+	//部品を受け取り，データを削除する
+	public void deleteComponent(int componentId) {
+		this.connection= this.createConnection();
 
-				//1個目の「?」に値をセット
-				stmt.setInt(1, componentId);
+		try{
+			String sql = "DELETE FROM components WHERE component_id = ?";
+			//SQL文からPreparedStatementを生成
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
 
-				//SQL文を実行
-				stmt.executeUpdate();
+			//1個目の「?」に値をセット
+			stmt.setInt(1, componentId);
 
-				stmt.close();
-				this.closeConnection(connection);
-			}catch(SQLException e){
-				this.closeConnection(connection);
-				e.printStackTrace();
-			} finally {
-				this.closeConnection(connection);
-			}
+			//SQL文を実行
+			stmt.executeUpdate();
+
+			stmt.close();
+			this.closeConnection(connection);
+		}catch(SQLException e){
+			this.closeConnection(connection);
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(connection);
 		}
+	}
+
+	//ソースコードを受け取り，データを削除する
+	public void deleteSource(int sourceId) {
+		this.connection= this.createConnection();
+
+		try{
+			String sql = "DELETE FROM source_files WHERE source_id = ?";
+			//SQL文からPreparedStatementを生成
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			//1個目の「?」に値をセット
+			stmt.setInt(1, sourceId);
+
+			//SQL文を実行
+			stmt.executeUpdate();
+
+			stmt.close();
+			this.closeConnection(connection);
+		}catch(SQLException e){
+			this.closeConnection(connection);
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(connection);
+		}
+	}
 
 }

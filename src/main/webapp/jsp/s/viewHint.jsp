@@ -11,7 +11,7 @@
 		ヒント:
 	</h1>
 	<pre>
-        <%=request.getAttribute("HintCode")%>
+        <%=request.getAttribute("CodeHint")%>
     </pre>
 	<a href="./JavaListServlet">戻る</a>
 </body>

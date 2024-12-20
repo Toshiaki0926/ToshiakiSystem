@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import beans.ComponentList;
 import dao.Dao;
 
-@WebServlet("/ComponentSetServlet")
-public class ComponentSetServlet extends HttpServlet{
+@WebServlet("/SetComponentServlet")
+public class SetComponentServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -27,16 +27,16 @@ public class ComponentSetServlet extends HttpServlet{
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 
-		String selectedComponentId = request.getParameter("component"); // プルダウンで選択された部品
-		int selectComponentId = Integer.parseInt(selectedComponentId);
+		String selectedComponentIdParam = request.getParameter("component"); // プルダウンで選択された部品
+		int selectedComponentId = Integer.parseInt(selectedComponentIdParam);
 
 		//sessionを取得
 		HttpSession session = request.getSession(false);
 		//sessionに保存した現在のsourceIdを取得
 		int sourceId = (int) session.getAttribute("sourceId");
 
-		String parent_id = request.getParameter("parentId"); // 親ID（nullの可能性あり）
-		Integer parentId = (parent_id != null && !parent_id.isEmpty()) ? Integer.parseInt(parent_id) : null;
+		String parentIdParam = request.getParameter("parentId"); // 親ID（nullの可能性あり）
+		Integer parentId = (parentIdParam != null && !parentIdParam.isEmpty()) ? Integer.parseInt(parentIdParam) : null;
 
 		String codes = request.getParameter("codes"); // JSPで送信されたコード全体
 
@@ -44,7 +44,7 @@ public class ComponentSetServlet extends HttpServlet{
 
 		ComponentList component = new ComponentList();
 
-		component.setComponent_id(selectComponentId);
+		component.setComponent_id(selectedComponentId);
 		component.setSource_id(sourceId);
 		component.setParent_id(parentId);
 		component.setComponent_code(codes);
@@ -59,7 +59,7 @@ public class ComponentSetServlet extends HttpServlet{
 		dao.insertListLines(listId, lineIds);
 
 
-		response.sendRedirect("ComponentEditorPageServlet?source_id=" + sourceId);
+		response.sendRedirect("SelectCodeLinePageServlet?source_id=" + sourceId);
 	}
 
 }

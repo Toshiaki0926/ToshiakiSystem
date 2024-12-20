@@ -1,6 +1,7 @@
 package beans;
 
 public class ComponentList {
+	private int list_id;
 	private int component_id; // 部品のid
 	private int source_id;
 	private Integer parent_id;
@@ -10,7 +11,8 @@ public class ComponentList {
 	public ComponentList() {
 	}
 
-	public ComponentList(int component_id, int source_id, Integer parent_id, String component_code) {
+	public ComponentList(int list_id, int component_id, int source_id, Integer parent_id, String component_code) {
+		this.list_id = list_id;
 		this.component_id = component_id;
 		this.source_id = source_id;
 		this.parent_id = parent_id;
@@ -47,5 +49,13 @@ public class ComponentList {
 
 	public void setComponent_code(String component_code) {
 		this.component_code = component_code;
+	}
+
+	public int getList_id() {
+		return list_id;
+	}
+
+	public void setList_id(int list_id) {
+		this.list_id = list_id;
 	}
 }

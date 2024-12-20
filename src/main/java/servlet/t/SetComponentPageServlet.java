@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import beans.Component;
 import dao.Dao;
 
-@WebServlet("/ComponentSetPageServlet")
-public class ComponentSetPageServlet extends HttpServlet {
+@WebServlet("/SetComponentPageServlet")
+public class SetComponentPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,7 +31,7 @@ public class ComponentSetPageServlet extends HttpServlet {
 
 		// チェックボックスが何も選択されていない場合、リダイレクト
 		if (selectedCodes == null || selectedCodes.length == 0) {
-			response.sendRedirect("ComponentEditorPageServlet?source_id=" + sourceId);
+			response.sendRedirect("SelectCodeLinePageServlet?source_id=" + sourceId);
 			return; // 処理を終了
 		}
 
@@ -53,7 +53,7 @@ public class ComponentSetPageServlet extends HttpServlet {
 
 		// サンプル: データベースから `CodeLine` を取得するDAO
 		Dao dao = new Dao();
-		List<String> Codes = dao.getCodeLines(selectedLineIds, sourceId);
+		List<String> Codes = dao.getCodeLines(selectedLineIds);
 
 		StringBuilder builder = new StringBuilder();
 		for (String code : Codes) {
@@ -63,12 +63,12 @@ public class ComponentSetPageServlet extends HttpServlet {
 
 		System.out.println(strCode);
 
-		List<Component> components = dao.getComponents(); // DAOメソッドで取得
+		List<Component> components = dao.getComponentDescriptions(); // DAOメソッドで取得
 		// リストをリクエスト属性にセット
 		request.setAttribute("Codes", strCode);
 		request.setAttribute("Components", components);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentSet.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/t/setComponent.jsp");
 		dispatcher.forward(request, response);
 	}
 

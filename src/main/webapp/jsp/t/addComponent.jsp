@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>部品登録</title>
-<link rel="stylesheet" href="./css/componentAdd.css">
+<link rel="stylesheet" href="./css/addComponent.css">
 </head>
 <body>
 	<div class="container">
 		<h1>部品登録</h1>
-		<form action="ComponentAddServlet" method="post"
+		<form action="AddComponentServlet" method="post"
 			enctype="multipart/form-data">
 			<div class="form-group">
 				<label>部品の説明:</label> <input type="text" name="componentDescription"

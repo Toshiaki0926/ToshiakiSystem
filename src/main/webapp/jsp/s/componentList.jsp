@@ -28,7 +28,7 @@
 	<div class="problem-container">
 		<label><%= c.getComponent_description() %></label>
 		<!-- コード表示ボタンを配置 -->
-		<form action="ComponentHintPageServlet" method="get" style="display: inline;">
+		<form action="ViewHintPageServlet" method="get" style="display: inline;">
 			<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
 			<input type="submit" value="ヒントを見る">
 		</form>

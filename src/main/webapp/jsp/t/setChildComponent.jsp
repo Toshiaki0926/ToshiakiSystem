@@ -8,15 +8,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>コード部品設定</title>
-<link rel="stylesheet" type="text/css" href="./css/componentSet.css">
+<title>子部品設定</title>
+<link rel="stylesheet" type="text/css" href="./css/setComponent.css">
 </head>
 <body>
 	<div class="header">
-		<h1>コード部品設定</h1>
+		<h1>子部品設定</h1>
 	</div>
 
-	<form action="ComponentSetServlet" method="POST" accept-charset="UTF-8">
+	<form action="SetChildComponentServlet" method="POST" accept-charset="UTF-8">
 		<table>
 			<thead>
 				<tr>

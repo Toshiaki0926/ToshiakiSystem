@@ -4,31 +4,33 @@
 <%@page import="java.util.*"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page import="beans.CodeLine"%>
+<%@ page import="beans.ComponentList"%>
+<%@ page import="beans.Component"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>コード行一覧ページ</title>
-<link rel="stylesheet" type="text/css" href="./css/componentEditor.css">
+<title>子部品選択ページ</title>
+<link rel="stylesheet" type="text/css" href="./css/selectCodeLine.css">
 </head>
 <body>
 	<div class="header">
-		<h1>コード行一覧</h1>
+		<h1>部品のコード</h1>
 	</div>
 	<br>
 	<div class="button-container">
-		<a href="./AdminServlet">戻る</a>
+		<a href="./ReturnCodeLinePageServlet">戻る</a>
 	</div>
 	<br>
 
 	<%
-	List<CodeLine> cList = (List<CodeLine>) request.getAttribute("CodeList");
+	List<CodeLine> comLines = (List<CodeLine>) request.getAttribute("ComponentLines");
 	%>
 
 	<%
-	if (cList != null && !cList.isEmpty()) {
+	if (comLines != null && !comLines.isEmpty()) {
 	%>
-	<form action="ComponentSetPageServlet" method="get">
+	<form action="SetChildComponentPageServlet" method="get">
 		<!-- フォームを追加 -->
 		<table>
 			<thead>
@@ -41,7 +43,7 @@
 			</thead>
 			<tbody>
 				<%
-				for (CodeLine c : cList) {
+				for (CodeLine c : comLines) {
 				%>
 				<tr>
 					<td><%=c.getLineNumber()%></td>
@@ -56,7 +58,7 @@
 			</tbody>
 		</table>
 		<div class="button-center">
-			<input type="submit" value="部品設定">
+			<input type="submit" value="子部品設定">
 		</div>
 	</form>
 	<%

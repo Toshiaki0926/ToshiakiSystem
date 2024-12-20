@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import dao.Dao;
 import hint.Main2;
 
-@WebServlet("/ComponentHintPageServlet")
-public class ComponentHintPageServlet extends HttpServlet {
+@WebServlet("/ViewHintPageServlet")
+public class ViewHintPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -23,7 +23,7 @@ public class ComponentHintPageServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		String cIdParam = request.getParameter("component_id");
-		int component_id = Integer.parseInt(cIdParam);
+		int componentId = Integer.parseInt(cIdParam);
 
 		//sessionを取得
 		HttpSession session = request.getSession(false);
@@ -32,12 +32,12 @@ public class ComponentHintPageServlet extends HttpServlet {
 
 		Dao dao = new Dao();
 
-		String Component_Code = dao.getComponentCode(component_id, sourceId);
+		String componentCode = dao.getComponentCode(componentId, sourceId);
 
-		String Code = "public class Sample1 {\n public static void main(String[] args){\n" + Component_Code + "\n} \n}";
+		String code = "public class Sample1 {\n public static void main(String[] args){\n" + componentCode + "\n} \n}";
 
 		// 変数名を空欄に置き換える
-		String hintCode = Main2.replaceVariables(Code);
+		String hintCode = Main2.replaceVariables(code);
 
 		// 改行で文字列を分割
 		String[] lines = hintCode.split("\n");
@@ -51,12 +51,12 @@ public class ComponentHintPageServlet extends HttpServlet {
 		}
 
 		// 最終的な文字列
-		String Code_Hint = codeHintBuilder.toString().trim();
+		String codeHint = codeHintBuilder.toString().trim();
 
 		// リストをリクエスト属性にセット
-		request.setAttribute("HintCode", Code_Hint);
+		request.setAttribute("CodeHint", codeHint);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentHint.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/viewHint.jsp");
 		dispatcher.forward(request, response);
 	}
 

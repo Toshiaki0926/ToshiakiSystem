@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>部品編集ページ</title>
-<link rel="stylesheet" type="text/css" href="./css/updateComponent.css">
+<link rel="stylesheet" type="text/css" href="./css/editComponent.css">
 </head>
 <body>
 

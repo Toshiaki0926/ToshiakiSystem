@@ -28,14 +28,14 @@ public class AdminServlet extends HttpServlet {
 		// Daoクラスから登録されたコードのリストを取得
 		Dao dao = new Dao();
 		List<Source_file> sourceList = dao.getSourceList();
-		List<Component> componentList = dao.getComponentList();
+		List<Component> componentList = dao.getComponents();
 
 		// リストをリクエスト属性にセット
 		request.setAttribute("SourceList", sourceList);
 		request.setAttribute("ComponentList", componentList);
 
 		// javaList.jspへフォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/admin.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/t/admin.jsp");
 		dispatcher.forward(request, response);
 	}
 }

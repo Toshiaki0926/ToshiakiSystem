@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/JavaAddPageServlet")
+@WebServlet("/AddComponentPageServlet")
 @MultipartConfig
-public class JavaAddPageServlet extends HttpServlet {
+public class AddComponentPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// JavaAdd.jspを表示
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/javaAdd.jsp");
+		// componentAdd.jspを表示
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/t/addComponent.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//doPostと同じ動作をしたいので，丸投げ
-				doGet(request, response);
+		//doGetと同じ動作をしたいので，丸投げ
+		doGet(request, response);
 	}
 }

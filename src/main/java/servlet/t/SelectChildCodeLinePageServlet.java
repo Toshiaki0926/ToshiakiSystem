@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import beans.CodeLine;
 import dao.Dao;
 
-@WebServlet("/ComponentEditorPageServlet")
-public class ComponentEditorPageServlet extends HttpServlet {
+@WebServlet("/SelectChildCodeLinePageServlet")
+public class SelectChildCodeLinePageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -22,27 +22,26 @@ public class ComponentEditorPageServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		Dao dao = new Dao();
 
-		String idParam = request.getParameter("source_id");
-		System.out.println("id: " + idParam);
-		int source_id = -1; // 初期値を設定
-		if (idParam != null) {
-			try {
-				source_id = Integer.parseInt(idParam);
-			} catch (NumberFormatException e) {
-				// パラメータが数値でない場合
-				e.printStackTrace();
-			}
-		}
-
-		List<CodeLine> codeLine = dao.getCodeList(source_id);
+		String listIdParam = request.getParameter("selectedListId");
+		String comIdParam = request.getParameter("selectedComponentId");
 		
+		System.out.println(listIdParam);
+		System.out.println(comIdParam);
+
+		int listId = Integer.parseInt(listIdParam);
+		int componentId = Integer.parseInt(comIdParam);
+		
+		List<Integer> componentLineIds = dao.getComponentLineIds(listId);
+		
+		List<CodeLine> componentLines = dao.getComponentLines(componentLineIds);
+
 		//sessionにsource_idを保存、このsessionで現在のsource_idが取得できる
-		request.getSession().setAttribute("sourceId" , source_id);
+		request.getSession().setAttribute("parentId" , componentId);
 
 		// リストをリクエスト属性にセット
-		request.setAttribute("CodeList", codeLine);
+		request.setAttribute("ComponentLines", componentLines);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/componentEditor.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/t/selectChildCodeLine.jsp");
 		dispatcher.forward(request, response);
 	}
 }
