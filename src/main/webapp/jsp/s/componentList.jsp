@@ -12,42 +12,53 @@
 <link rel="stylesheet" type="text/css" href="./css/componentList.css">
 </head>
 <body>
+	<%
+	String  sourceName = (String) request.getAttribute("SourceName");
+	%>
 	<div class="header">
-		<h1>部品一覧</h1>
+		<h1><%= sourceName%>の部品一覧</h1>
 	</div>
 	<br>
+	<div class="button-container">
+		<a href="./JavaListServlet">戻る</a>
+	</div>
 	<br>
 
-	<% 
-	List<Component> components = (List<Component>)request.getAttribute("Components");
+	<%
+	List<Component> components = (List<Component>) request.getAttribute("Components");
 	%>
-	<% 
-        if (components != null) { 
-            for (Component c : components) { 
-    %>
+	<%
+	if (components != null) {
+		for (Component c : components) {
+	%>
 	<div class="problem-container">
-		<label><%= c.getComponent_description() %></label>
+		<label><%=c.getComponent_description()%></label>
 		<!-- コード表示ボタンを配置 -->
-		<form action="ViewHintPageServlet" method="get" style="display: inline;">
-			<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
-			<input type="submit" value="ヒントを見る">
+		<form action="ViewHintPageServlet" method="get"
+			style="display: inline;">
+			<input type="hidden" name="component_id"
+				value="<%=c.getComponent_id()%>"> <input type="submit"
+				value="ヒントを見る">
 		</form>
-		<form action="ComponentListPageServlet" method="get" style="display: inline;">
+		<form action="ComponentListPageServlet" method="get"
+			style="display: inline;">
 			<input type="submit" value="詳細を見る">
 		</form>
-		<form action="ComponentSlicePageServlet" method="get" style="display: inline;">
-			<input type="hidden" name="component_id" value="<%= c.getComponent_id() %>">
-			<input type="submit" value="1行ずつ見る">
+		<form action="ComponentSlicePageServlet" method="get"
+			style="display: inline;">
+			<input type="hidden" name="component_id"
+				value="<%=c.getComponent_id()%>"> <input type="submit"
+				value="1行ずつ見る">
 		</form>
 	</div>
 	<br>
-	<% 
-            }
-        } else {
-    %>
+	<%
+	}
+	} else {
+	%>
 	<p>登録された部品がありません。</p>
-	<% 
-        } 
-    %>
+	<%
+	}
+	%>
 </body>
 </html>

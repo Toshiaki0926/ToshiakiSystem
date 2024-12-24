@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.ComponentList;
-import dao.Dao;
+import dao.WriteDao;
 
 @WebServlet("/SetChildComponentServlet")
 public class SetChildComponentServlet extends HttpServlet{
@@ -39,7 +39,7 @@ public class SetChildComponentServlet extends HttpServlet{
 
 		String codes = request.getParameter("codes"); // JSPで送信されたコード全体
 
-		Dao dao = new Dao();
+		WriteDao dao = new WriteDao();
 
 		ComponentList component = new ComponentList();
 

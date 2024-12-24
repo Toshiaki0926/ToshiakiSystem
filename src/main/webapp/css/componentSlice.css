@@ -1,40 +1,49 @@
-@charset "UTF-8";
+/* ページ全体のスタイル */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+}
 
 /* ヘッダーのスタイル */
 .header {
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .header h1 {
-    font-size: 32px;
-    color: #555;
-    font-weight: bold;
-    text-align: center; /* 直接中央揃えを設定 */
+    font-size: 24px;
+    color: #333;
 }
 
+/* テーブル全体のレイアウトを自動調整から固定に変更 */
 table {
-	width: 100%;
-	border-collapse: collapse;
+    width: 100%;  /* テーブルを親要素の幅に合わせて広げる */
+    table-layout: fixed; /* 列幅を固定 */
+    border-collapse: collapse; /* セルの枠線が重ならないように */
 }
 
+/* 各列の幅を指定 */
 th, td {
-	padding: 8px;
-	text-align: left;
-	border: 1px solid #ddd;
+    padding: 8px;  /* セルの内側の余白 */
+    text-align: left;  /* 左揃え */
+    overflow: hidden;  /* 内容がはみ出ないように */
+    text-overflow: ellipsis; /* はみ出した内容に「...」を表示 */
+    white-space: nowrap; /* 改行させない */
 }
 
-th {
-	background-color: #f2f2f2;
+/* 1列目（行番号）の幅を設定 */
+th:nth-child(1), td:nth-child(1) {
+    width: 15%;  /* 行番号列の幅 */
+    min-width: 50px;  /* 最小幅 */
+    max-width: 100px;  /* 最大幅 */
 }
 
-input[type="checkbox"] {
-    transform: scale(2);  /* チェックボックスのサイズを1.5倍に */
-    margin: 0;  /* マージン調整 */
+/* 2列目（説明）の幅を設定し、長さによる変動を防止 */
+th:nth-child(2), td:nth-child(2) {
+    width: 85%;  /* 説明列の幅 */
+    min-width: 200px; /* 最小幅 */
+    max-width: 300px; /* 最大幅 */
 }
 
-input[type="submit"] {
-    padding: 12px 20px;  /* 上下12px、左右20pxの余白 */
-    font-size: 18px;  /* フォントサイズを18pxに */
-    cursor: pointer;  /* ポインタカーソルに変更 */
-}
+

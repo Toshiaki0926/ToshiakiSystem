@@ -57,7 +57,7 @@
 
 		<!-- 右側にソースコード一覧を表示 -->
 		<div class="right-sidebar">
-			<label class="section-title">ソースコード一覧</label>
+			<label class="section-title">問題一覧</label>
 			<% 
 				List<Source_file> sList = (List<Source_file>) request.getAttribute("SourceList");
 				if (sList != null) {
@@ -71,7 +71,7 @@
 						<label class="section-element"><%= s.getSource_Name() %></label>
 						<form action="SelectCodeLinePageServlet" method="get" style="display: inline;">
 							<input type="hidden" name="source_id" value="<%= s.getSource_Id() %>">
-							<input type="submit" value="部品を表示">
+							<input type="submit" value="コードに部品を設定">
 						</form>
 					</div>
 				</li>

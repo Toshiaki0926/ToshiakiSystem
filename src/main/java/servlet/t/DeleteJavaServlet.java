@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.Dao;
+import dao.WriteDao;
 
 @WebServlet("/DeleteJavaServlet")
 @MultipartConfig
@@ -32,7 +32,7 @@ public class DeleteJavaServlet extends HttpServlet {
 		System.out.println("Source id: " + sourceId);
 
 		// Daoを使ってデータベースから削除
-		Dao dao = new Dao();
+		WriteDao dao = new WriteDao();
 		dao.deleteSource(sourceId);
 
 		// リダイレクトして同じページに戻る

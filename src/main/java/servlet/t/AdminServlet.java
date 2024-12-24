@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Component;
 import beans.Source_file;
-import dao.Dao;
+import dao.ReadDao;
 
 @WebServlet("/AdminServlet")
 public class AdminServlet extends HttpServlet {
@@ -26,7 +26,7 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Daoクラスから登録されたコードのリストを取得
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 		List<Source_file> sourceList = dao.getSourceList();
 		List<Component> componentList = dao.getComponents();
 

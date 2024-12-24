@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.User;
-import dao.Dao;
+import dao.ReadDao;
 
 //SampleBBS/LoginServletにアクセスされると動作
 @WebServlet("/LoginServlet")
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		//DBアクセスのためのクラスをインスタンス化
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 		//idを渡し，そのidを持つユーザをDBから取得.Userはbeansパッケージに宣言してある．
 		User user = dao.getUserById(user_id);
 

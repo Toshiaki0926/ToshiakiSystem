@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Component;
-import dao.Dao;
+import dao.ReadDao;
 
 @WebServlet("/ComponentListPageServlet")
 public class ComponentListPageServlet extends HttpServlet {
@@ -22,11 +22,13 @@ public class ComponentListPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 
 		String idParam = request.getParameter("source_id");
 		System.out.println("id: " + idParam);
 		int sourceId = Integer.parseInt(idParam);
+		
+		String sourceName = dao.getSource_name(sourceId);
 		
 		request.getSession().setAttribute("sourceId" , sourceId);
 
@@ -38,6 +40,7 @@ public class ComponentListPageServlet extends HttpServlet {
 		List<Component> components = dao.getComponentsByIds(uniqueComponentIds);
 
 		// リストをリクエスト属性にセット
+		request.setAttribute("SourceName", sourceName);
 		request.setAttribute("Components", components);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/componentList.jsp");

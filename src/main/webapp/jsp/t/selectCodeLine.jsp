@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>コード行一覧ページ</title>
+<title>コード部品化ページ</title>
 <link rel="stylesheet" type="text/css" href="./css/selectCodeLine.css">
 </head>
 <body>
@@ -72,7 +72,7 @@
 	}
 	%>
 
-	<label>現在登録中の部品</label>
+	<label>現在設定中の部品</label>
 
 	<%
 	if (comList != null && !comList.isEmpty()) {
@@ -102,7 +102,13 @@
 					<td>
 						<!-- 親部品がnullかチェック、nullなら「null」と表示 --> <%
 						if (c.getParent_id() != null) {
-						%> <%=c.getParent_id()%> <%
+							String parentDescription = null;
+							for (Component component : components) {
+								if (component.getComponent_id() == c.getParent_id()) {
+									parentDescription = component.getComponent_description();
+								}
+							}
+						%> <%=parentDescription%> <%
 						} else {
 						%> <%= "なし" %> <%
 						}
@@ -111,7 +117,7 @@
 					<td><%=c.getComponent_code()%></td>
 					<td><%=description%></td>
 					<td><button type="submit" name="selectedListId"
-						value="<%=c.getList_id()%>"> 子部品登録</button>
+						value="<%=c.getList_id()%>"> 子部品設定</button>
 						<input type="hidden" name="selectedComponentId" 
 						value="<%=c.getComponent_id()%>">
 						<input type="hidden" name="selectedComponentCode" 
@@ -127,7 +133,7 @@
 	<%
 	} else {
 	%>
-	<p>登録されたコードがありません。</p>
+	<p>設定された部品がありません。</p>
 	<%
 	}
 	%>

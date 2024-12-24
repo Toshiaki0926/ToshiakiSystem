@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Source_file;
-import dao.Dao;
+import dao.ReadDao;
 
 @WebServlet("/JavaListServlet")
 public class JavaListServlet extends HttpServlet {
@@ -25,7 +25,7 @@ public class JavaListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Daoクラスから登録されたコードのリストを取得
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 		List<Source_file> sourceList = dao.getSourceList();
 
 		// リストをリクエスト属性にセット

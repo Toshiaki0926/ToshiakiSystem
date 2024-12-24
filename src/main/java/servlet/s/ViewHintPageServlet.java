@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.Dao;
+import dao.ReadDao;
 import hint.Main2;
 
 @WebServlet("/ViewHintPageServlet")
@@ -30,7 +30,7 @@ public class ViewHintPageServlet extends HttpServlet {
 		//sessionに保存したsourceIdを取得
 		int sourceId = (int) session.getAttribute("sourceId");
 
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 
 		String componentCode = dao.getComponentCode(componentId, sourceId);
 

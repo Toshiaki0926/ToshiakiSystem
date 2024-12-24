@@ -7,42 +7,42 @@
     {
         "line_number": 2,
         "code": "int total = 0;",
-        "description": "整数の変数totalを宣言し、0で初期化する"
+        "description": "整数型変数totalを宣言し、0で初期化する"
     },
     {
         "line_number": 3,
         "code": "double average;",
-        "description": "double型の変数averageを宣言する"
+        "description": "double型変数averageを宣言する"
     },
     {
         "line_number": 5,
         "code": "score[0] = 86;",
-        "description": "score配列の0番目に86を代入する"
+        "description": "score配列の0番目の要素に86を代入する"
     },
     {
         "line_number": 6,
         "code": "score[1] = 74;",
-        "description": "score配列の1番目に74を代入する"
+        "description": "score配列の1番目の要素に74を代入する"
     },
     {
         "line_number": 7,
         "code": "score[2] = 91;",
-        "description": "score配列の2番目に91を代入する"
+        "description": "score配列の2番目の要素に91を代入する"
     },
     {
         "line_number": 8,
         "code": "score[3] = 59;",
-        "description": "score配列の3番目に59を代入する"
+        "description": "score配列の3番目の要素に59を代入する"
     },
     {
         "line_number": 9,
         "code": "score[4] = 100;",
-        "description": "score配列の4番目に100を代入する"
+        "description": "score配列の4番目の要素に100を代入する"
     },
     {
         "line_number": 10,
         "code": "score[5] = 41;",
-        "description": "score配列の5番目に41を代入する"
+        "description": "score配列の5番目の要素に41を代入する"
     },
     {
         "line_number": 12,
@@ -62,7 +62,7 @@
     {
         "line_number": 15,
         "code": "average = (double)total / score.length;",
-        "description": "totalをdouble型にキャストしてscore配列の長さで除算し、averageに代入する"
+        "description": "totalをdouble型にキャストし、score配列の長さで割ってaverageに代入する"
     },
     {
         "line_number": 17,

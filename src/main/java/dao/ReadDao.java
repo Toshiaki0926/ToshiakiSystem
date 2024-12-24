@@ -11,10 +11,11 @@ import java.util.Set;
 import beans.CodeLine;
 import beans.Component;
 import beans.ComponentList;
+import beans.ListLine;
 import beans.Source_file;
 import beans.User;
 
-public class Dao extends DriverAccessor{
+public class ReadDao extends DriverAccessor{
 
 	//DBとのコネクションを入れる変数
 	private Connection connection;
@@ -23,7 +24,7 @@ public class Dao extends DriverAccessor{
 	public static final String UTF_8 = "UTF-8";
 	public static final String MS932 = "MS932";
 
-	public Dao(){
+	public ReadDao(){
 	}
 
 	//ユーザidを入力すると，そのidを持つUserを返す
@@ -73,31 +74,6 @@ public class Dao extends DriverAccessor{
 		}
 
 		return user;
-	}
-
-	//部品の説明を受け取り、DBに格納する
-	public void insertComponent(String description) {
-		this.connection= this.createConnection();
-
-		try{
-			String sql = "insert into components (component_description) values(?)";
-
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-
-			//1個目の「?」に値をセット
-			stmt.setString(1, description);
-
-			//SQL文を実行
-			stmt.executeUpdate();
-
-			stmt.close();
-			this.closeConnection(connection);
-		}catch(SQLException e){
-			this.closeConnection(connection);
-			e.printStackTrace();
-		} finally {
-			this.closeConnection(connection);
-		}
 	}
 
 	//component_idに一致する部品を取得
@@ -169,73 +145,43 @@ public class Dao extends DriverAccessor{
 
 		return source_code;
 	}
-
-
-	// Codeを受け取り，DBに格納し、生成されたsource_idを返す
-	public int insertSource_Code2(Source_file source_code) {
+	
+	public String getSource_name(int source_id) {
+		String sourceName = null;
 		this.connection = this.createConnection();
 
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return -1; // 接続が失敗した場合はエラーコードを返す
-		}
+		try{
+			String sql = "select source_name from source_files where source_id = ?";
 
-		try {
-			this.connection.setAutoCommit(false); // 自動コミットを無効にする
-			String sql = "insert into source_files (source_name, source_code) values(?, ?)";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
 
-			PreparedStatement stmt = this.connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS); // 生成されたIDを取得する設定
+			stmt.setInt(1, source_id);
 
-			// 1個目の「?」に値をセット
-			stmt.setString(1, source_code.getSource_Name());
-			// 2個目の「?」に値をセット
-			stmt.setString(2, source_code.getSource_Code());
+			ResultSet rs = stmt.executeQuery();
 
-			// SQL文を実行
-			int rowsAffected = stmt.executeUpdate();
-			System.out.println("Rows affected: " + rowsAffected); // 追加
-
-			// 生成されたIDを取得
-			ResultSet generatedKeys = stmt.getGeneratedKeys();
-			if (generatedKeys.next()) {
-				int generatedId = generatedKeys.getInt(1); // 生成されたIDを取得
-				this.connection.commit(); // 明示的にコミットを行う
-				stmt.close();
-				this.closeConnection(connection);
-				return generatedId; // 生成されたIDを返す
-			} else {
-				this.connection.rollback(); // 生成されなかった場合、ロールバック
-				this.closeConnection(connection);
-				return -1; // 生成されたIDがない場合はエラーコードを返す
+			if(rs.first()){
+				sourceName = rs.getString("source_name");		
+			} else{
+				this.closeConnection(this.connection);
+				return null;
 			}
 
-		} catch (SQLException e) {
-			try {
-				if (this.connection != null) {
-					this.connection.rollback(); // エラー時はロールバック
-				}
-			} catch (SQLException rollbackEx) {
-				rollbackEx.printStackTrace();
-			}
-			this.closeConnection(connection);
+		}catch(SQLException e){
+			this.closeConnection(this.connection);
 			e.printStackTrace();
-			return -1; // エラーコードを返す
-		} finally {
-			this.closeConnection(connection);
-		}
-	}
+			return null;
 
+		} finally {
+			this.closeConnection(this.connection);
+		}
+
+		return sourceName;
+	}
 
 	//ソースコードのリストを取得
 	public List<Source_file> getSourceList() {
 		List<Source_file> sourceList = new ArrayList<>();
 		this.connection = this.createConnection();
-
-		// 接続が成功しているか確認
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return sourceList; // 接続に失敗した場合は空のリストを返す
-		}
 
 		try {
 			String sql = "SELECT * FROM source_files";
@@ -264,12 +210,6 @@ public class Dao extends DriverAccessor{
 		List<Component> componentList = new ArrayList<>();
 		this.connection = this.createConnection();
 
-		// 接続が成功しているか確認
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return componentList; // 接続に失敗した場合は空のリストを返す
-		}
-
 		try {
 			String sql = "SELECT * FROM components";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -292,41 +232,10 @@ public class Dao extends DriverAccessor{
 		return componentList;
 	}
 
-	//1行ずつのコードをテーブルに保存
-	public void insertCodeLines(List<CodeLine> codeLines, int sourceId) {
-		this.connection = this.createConnection();
-
-		try {
-			String sql = "INSERT INTO code_lines (line_number, code, description, source_id) VALUES (?, ?, ?, ?)";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-
-			for (CodeLine line : codeLines) {
-				stmt.setInt(1, line.getLineNumber());
-				stmt.setString(2, line.getCode());
-				stmt.setString(3, line.getDescription());
-				stmt.setInt(4, sourceId);
-				stmt.addBatch(); // バッチ処理
-			}
-
-			stmt.executeBatch(); // バッチ実行
-			stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.closeConnection(this.connection);
-		}
-	}
-
 	//source_idを受け取ると、一致するcodeを全て取得
 	public List<CodeLine> getCodeList(int source_id) {
 		List<CodeLine> codeList = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
-
-		// 接続が成功しているか確認
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return codeList; // 接続に失敗した場合は空のリストを返す
-		}
 
 		try {
 			String sql = "SELECT * FROM code_lines WHERE source_id = ?";;
@@ -358,11 +267,6 @@ public class Dao extends DriverAccessor{
 	public List<String> getCodeLines(List<Integer> lineIds) {
 		List<String> codeLines = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
-
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return codeLines; // 接続に失敗した場合は空のリストを返す
-		}
 
 		try {
 			// プレースホルダーを生成 (例: "?, ?, ?")
@@ -403,11 +307,6 @@ public class Dao extends DriverAccessor{
 		List<CodeLine> componentLines = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
 
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return componentLines; // 接続に失敗した場合は空のリストを返す
-		}
-
 		try {
 			// プレースホルダーを生成 (例: "?, ?, ?")
 			StringBuilder placeholders = new StringBuilder();
@@ -435,7 +334,7 @@ public class Dao extends DriverAccessor{
 				int lineNum = rs.getInt("line_number");
 				String code = rs.getString("code");
 				String description = rs.getString("description");
-				
+
 				CodeLine codeLine = new CodeLine(lineId, lineNum, code, description);
 				componentLines.add(codeLine); // 結果をリストに追加
 			}
@@ -469,79 +368,6 @@ public class Dao extends DriverAccessor{
 			e.printStackTrace();
 		}
 		return components;
-	}
-
-	//ソースコードに含まれる部品を設定し、生成されたlist_idを取得
-	public int insertComponentList(ComponentList component) {
-		this.connection= this.createConnection();
-
-		try {
-			this.connection.setAutoCommit(false); // 自動コミットを無効にする
-			String sql = "INSERT INTO component_lists (component_id, source_id, parent_id, component_code) VALUES (?, ?, ?, ?)";
-			PreparedStatement stmt = this.connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS); // 生成されたIDを取得する設定
-			stmt.setInt(1, component.getComponent_id());
-			stmt.setInt(2, component.getSource_id());
-			// parent_id が null かどうかを確認
-			if (component.getParent_id() != null) {
-				stmt.setInt(3, component.getParent_id());
-			} else {
-				stmt.setNull(3, java.sql.Types.INTEGER); // parent_id を NULL として設定
-			}
-			stmt.setString(4, component.getComponent_code());
-			//SQL文を実行
-			stmt.executeUpdate();
-
-			// 生成されたIDを取得
-			ResultSet generatedKeys = stmt.getGeneratedKeys();
-			if (generatedKeys.next()) {
-				int generatedId = generatedKeys.getInt(1); // 生成されたIDを取得
-				this.connection.commit(); // 明示的にコミットを行う
-				stmt.close();
-				this.closeConnection(connection);
-				return generatedId; // 生成されたIDを返す
-			} else {
-				this.connection.rollback(); // 生成されなかった場合、ロールバック
-				this.closeConnection(connection);
-				return -1; // 生成されたIDがない場合はエラーコードを返す
-			}
-
-		} catch (SQLException e) {
-			try {
-				if (this.connection != null) {
-					this.connection.rollback(); // エラー時はロールバック
-				}
-			} catch (SQLException rollbackEx) {
-				rollbackEx.printStackTrace();
-			}
-			this.closeConnection(connection);
-			e.printStackTrace();
-			return -1; // エラーコードを返す
-		} finally {
-			this.closeConnection(connection);
-		}
-	}
-
-	// 部品に対応する行番号を保存
-	public void insertListLines(int listId, List<Integer> lineIds) {
-		this.connection = this.createConnection();
-
-		try {
-			String sql = "INSERT INTO component_lines (list_id, line_id) VALUES (?, ?)";
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-
-			for (int lineId : lineIds) { // List<Integer>を直接扱う
-				stmt.setInt(1, listId);
-				stmt.setInt(2, lineId);
-				stmt.addBatch(); // バッチ処理
-			}
-
-			stmt.executeBatch(); // バッチ実行
-			stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			this.closeConnection(this.connection);
-		}
 	}
 
 	//ソースコードに含まれる親がない部品（parent_idがnullの部品）のリストを取得
@@ -670,16 +496,10 @@ public class Dao extends DriverAccessor{
 		return componentCode;
 	}
 
-	//source_idとcomponent_idを受け取ると、一致するCodeLineを全て取得
+	//source_idとcomponent_idを受け取ると、一致するlist_idを全て取得
 	public List<Integer> getComponentListIds(int component_id, int source_id) {
 		List<Integer> listIds = new ArrayList<>();
 		this.connection = this.createConnection(); // 接続を生成
-
-		// 接続が成功しているか確認
-		if (this.connection == null) {
-			System.out.println("Database connection failed.");
-			return listIds; // 接続に失敗した場合は空のリストを返す
-		}
 
 		try {
 			String sql = "SELECT list_id FROM component_lists WHERE component_id = ? AND source_id = ?";
@@ -704,9 +524,9 @@ public class Dao extends DriverAccessor{
 		return listIds;
 	}
 
-	//部品idを受け取り、一致する部品のリストを返す
-	public List<Integer> getLineIds(List<Integer> listIds) {
-		List<Integer> lineIds = new ArrayList<>();
+	//部品のlist_idを複数受け取って、list_idに一致するline_idを受け取る
+	public List<ListLine> getLineIds(List<Integer> listIds) {
+		List<ListLine> lineIds = new ArrayList<>();
 		this.connection = this.createConnection();
 
 		// プレースホルダーを生成（例: "?, ?, ?")
@@ -719,7 +539,7 @@ public class Dao extends DriverAccessor{
 		}
 
 		try {
-			String sql = "SELECT line_id FROM component_lines WHERE list_id IN (" + placeholders + ")";
+			String sql = "SELECT * FROM component_lines WHERE list_id IN (" + placeholders + ")";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 
 			// プレースホルダーに値を設定
@@ -731,7 +551,11 @@ public class Dao extends DriverAccessor{
 			// クエリを実行
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				lineIds.add(rs.getInt("line_id"));
+				int listId = rs.getInt("list_id");
+				int lineId = rs.getInt("line_id");
+
+				ListLine listLines = new ListLine(listId, lineId);
+				lineIds.add(listLines);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace(); // エラーメッセージを出力
@@ -769,6 +593,7 @@ public class Dao extends DriverAccessor{
 	//部品idを受け取り、一致する部品のリストを返す
 	public List<CodeLine> getSliceComponent(List<Integer> lineIds) {
 		List<CodeLine> codeLines = new ArrayList<>();
+		
 		this.connection = this.createConnection();
 
 		// プレースホルダーを生成（例: "?, ?, ?")
@@ -786,8 +611,8 @@ public class Dao extends DriverAccessor{
 
 			// プレースホルダーに値を設定
 			int index = 1;
-			for (int id : lineIds) {
-				stmt.setInt(index++, id);
+			for (int line : lineIds) {
+				stmt.setInt(index++, line);
 			}
 
 			// クエリを実行
@@ -797,9 +622,9 @@ public class Dao extends DriverAccessor{
 				int lineNumber = rs.getInt("line_number");
 				String code = rs.getString("code");
 				String description = rs.getString("description");
-
-				CodeLine codeLine = new CodeLine(lineId, lineNumber, code, description);
-				codeLines.add(codeLine);
+				
+				CodeLine cl = new CodeLine(lineId, lineNumber, code, description);
+				codeLines.add(cl);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace(); // エラーメッセージを出力
@@ -810,83 +635,29 @@ public class Dao extends DriverAccessor{
 		return codeLines;
 	}
 
-	//部品を受け取り，データをアップデートする
-	public void updateComponent(Component component) {
-		this.connection= this.createConnection();
+	//source_idを受け取ると一番大きいline_numberを返す（プログラムが全体で何行あるか）
+	public int getMaxLineNumberBySourceId(int sourceId) {
+		int maxLineNumber = -1; // デフォルト値（該当行がない場合）
+		this.connection = this.createConnection();
 
-		try{
-			//SQL文を定義
-			//?には後で値を入れる．
-			String sql = "update components set component_description=? where component_id=?";
-			//SQL文からPreparedStatementを生成
+		try {
+			// SQLクエリを準備
+			String sql = "SELECT MAX(line_number) AS max_line_number FROM code_lines WHERE source_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, sourceId); // パラメータを設定
 
-			//1個目の「?」に値をセット
-			stmt.setString(1, component.getComponent_description() );
-			//2個目の「?」に値をセット
-			stmt.setInt(2, component.getComponent_id());
-
-			//SQL文を実行
-			stmt.executeUpdate();
-
-			stmt.close();
-			this.closeConnection(connection);
-		}catch(SQLException e){
-			this.closeConnection(connection);
-			e.printStackTrace();
+			// クエリを実行
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				maxLineNumber = rs.getInt("max_line_number"); // 最大値を取得
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーを出力
 		} finally {
-			this.closeConnection(connection);
+			this.closeConnection(this.connection); // 接続を必ず閉じる
 		}
-	}
 
-	//部品を受け取り，データを削除する
-	public void deleteComponent(int componentId) {
-		this.connection= this.createConnection();
-
-		try{
-			String sql = "DELETE FROM components WHERE component_id = ?";
-			//SQL文からPreparedStatementを生成
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-
-			//1個目の「?」に値をセット
-			stmt.setInt(1, componentId);
-
-			//SQL文を実行
-			stmt.executeUpdate();
-
-			stmt.close();
-			this.closeConnection(connection);
-		}catch(SQLException e){
-			this.closeConnection(connection);
-			e.printStackTrace();
-		} finally {
-			this.closeConnection(connection);
-		}
-	}
-
-	//ソースコードを受け取り，データを削除する
-	public void deleteSource(int sourceId) {
-		this.connection= this.createConnection();
-
-		try{
-			String sql = "DELETE FROM source_files WHERE source_id = ?";
-			//SQL文からPreparedStatementを生成
-			PreparedStatement stmt = this.connection.prepareStatement(sql);
-
-			//1個目の「?」に値をセット
-			stmt.setInt(1, sourceId);
-
-			//SQL文を実行
-			stmt.executeUpdate();
-
-			stmt.close();
-			this.closeConnection(connection);
-		}catch(SQLException e){
-			this.closeConnection(connection);
-			e.printStackTrace();
-		} finally {
-			this.closeConnection(connection);
-		}
+		return maxLineNumber; // 結果を返す
 	}
 
 }

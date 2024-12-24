@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.Dao;
+import dao.WriteDao;
 
 @WebServlet("/AddComponentServlet")
 @MultipartConfig
@@ -34,7 +34,7 @@ public class AddComponentServlet extends HttpServlet {
 		System.out.println("Component Description: " + componentDescription);
 
 		// Daoを使ってデータベースに保存
-		Dao dao = new Dao();
+		WriteDao dao = new WriteDao();
 		dao.insertComponent(componentDescription);
 
 		// リダイレクトして同じページに戻る

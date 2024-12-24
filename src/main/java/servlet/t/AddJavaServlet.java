@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import beans.Source_file;
-import dao.Dao;
+import dao.WriteDao;
 import divide.PythonExecutor;
 
 @WebServlet("/AddJavaServlet")
@@ -35,6 +35,14 @@ public class AddJavaServlet extends HttpServlet {
 		Part filePart = request.getPart("javaFile"); // "javaFile" from jsp
 		String fileName = request.getParameter("fileName"); // file name from form input
 
+		// ファイル名の検証
+		String submittedFileName = filePart.getSubmittedFileName();
+		if (submittedFileName == null || !submittedFileName.endsWith(".java")) {
+			// エラーをリクエストに設定して登録ページに戻る
+			request.getRequestDispatcher("AddJavaPageServlet").forward(request, response);
+			return;
+		}
+
 		// ファイルの内容を読み取る
 		StringBuilder fileContent = new StringBuilder();
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(filePart.getInputStream(), StandardCharsets.UTF_8))) {
@@ -45,7 +53,7 @@ public class AddJavaServlet extends HttpServlet {
 		}
 
 		// Daoを使ってデータベースに保存
-		Dao dao = new Dao();
+		WriteDao dao = new WriteDao();
 		Source_file sourceCode = new Source_file();
 		sourceCode.setSource_Name(fileName); // ファイル名を設定
 		sourceCode.setSource_Code(fileContent.toString()); // ファイルの内容を設定

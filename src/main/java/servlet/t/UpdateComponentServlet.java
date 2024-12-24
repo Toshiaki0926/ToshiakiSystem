@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.Component;
-import dao.Dao;
+import dao.WriteDao;
 
 @WebServlet("/UpdateComponentServlet")
 @MultipartConfig
@@ -39,7 +39,7 @@ public class UpdateComponentServlet extends HttpServlet {
 		Component component = new Component(componentId, componentDescription);
 
 		// Daoを使ってデータベースに保存
-		Dao dao = new Dao();
+		WriteDao dao = new WriteDao();
 		dao.updateComponent(component);
 
 		// リダイレクトして同じページに戻る

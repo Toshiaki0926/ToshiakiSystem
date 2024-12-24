@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.Dao;
+import dao.WriteDao;
 
 @WebServlet("/DeleteComponentServlet")
 @MultipartConfig
@@ -32,7 +32,7 @@ public class DeleteComponentServlet extends HttpServlet {
 		System.out.println("Component Id: " + componentId);
 
 		// Daoを使ってデータベースから削除
-		Dao dao = new Dao();
+		WriteDao dao = new WriteDao();
 		dao.deleteComponent(componentId);
 
 		// リダイレクトして同じページに戻る

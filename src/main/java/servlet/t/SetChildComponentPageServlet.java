@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import beans.Component;
-import dao.Dao;
+import dao.ReadDao;
 
 @WebServlet("/SetChildComponentPageServlet")
 public class SetChildComponentPageServlet extends HttpServlet {
@@ -52,7 +52,7 @@ public class SetChildComponentPageServlet extends HttpServlet {
 		request.getSession().setAttribute("lineIds" , selectedLineIds);
 
 		// サンプル: データベースから `CodeLine` を取得するDAO
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 		List<String> Codes = dao.getCodeLines(selectedLineIds);
 
 		StringBuilder builder = new StringBuilder();

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Component;
-import dao.Dao;
+import dao.ReadDao;
 
 @WebServlet("/EditComponentPageServlet")
 public class EditComponentPageServlet extends HttpServlet {
@@ -19,7 +19,7 @@ public class EditComponentPageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 
 		String idParam = request.getParameter("component_id");
 		System.out.println("id: " + idParam);

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.CodeLine;
-import dao.Dao;
+import dao.ReadDao;
 
 @WebServlet("/SelectChildCodeLinePageServlet")
 public class SelectChildCodeLinePageServlet extends HttpServlet {
@@ -20,7 +20,7 @@ public class SelectChildCodeLinePageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		Dao dao = new Dao();
+		ReadDao dao = new ReadDao();
 
 		String listIdParam = request.getParameter("selectedListId");
 		String comIdParam = request.getParameter("selectedComponentId");

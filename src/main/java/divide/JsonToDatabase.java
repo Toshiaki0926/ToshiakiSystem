@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import beans.CodeLine;
-import dao.Dao;
+import dao.WriteDao;
 
 public class JsonToDatabase {
 	public static void main(int source_id) {
@@ -20,7 +20,7 @@ public class JsonToDatabase {
 			Type listType = new TypeToken<List<CodeLine>>() {}.getType();
 			List<CodeLine> codeLines = gson.fromJson(reader, listType);
 			
-			Dao dao = new Dao();
+			WriteDao dao = new WriteDao();
 			dao.insertCodeLines(codeLines, source_id);
 			
 			System.out.println("データの挿入が完了しました！");
