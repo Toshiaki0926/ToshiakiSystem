@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+/* ページ全体のスタイル */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* ヘッダーのスタイル */
+.header h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ヒント表示ボックスのスタイル */
+.container {
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 80%;
+}
+
+/* ヒント表示部分 */
+.container pre {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+    margin: 0;
+}
+
+/* ボタンエリア */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* ボタンの間隔 */
+    margin-top: 20px; /* ボックスとの間隔 */
+}
+
+/* ボタンの共通スタイル */
+.styled-button {
+    padding: 9px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.styled-button:hover {
+    background-color: #45a049;
+}

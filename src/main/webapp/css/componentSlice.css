@@ -23,6 +23,11 @@ table {
     border-collapse: collapse; /* セルの枠線が重ならないように */
 }
 
+/* カラム名のスタイル */
+th {
+    background-color: #f2f2f2; /* ヘッダーセルの背景色 */
+}
+
 /* 各列の幅を指定 */
 th, td {
     padding: 8px;  /* セルの内側の余白 */

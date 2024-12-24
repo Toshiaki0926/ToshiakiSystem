@@ -8,19 +8,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>部品一覧</title>
+<title>子部品一覧</title>
 <link rel="stylesheet" type="text/css" href="./css/componentList.css">
 </head>
 <body>
-	<%
-	String  sourceName = (String) request.getAttribute("SourceName");
-	%>
 	<div class="header">
-		<h1><%= sourceName%>の部品一覧</h1>
+		<h1>子部品一覧</h1>
 	</div>
 	<br>
 	<div class="button-container">
-		<a href="./JavaListServlet">戻る</a>
+		<a href="javascript:history.back();">戻る</a>
 	</div>
 	<br>
 
@@ -40,10 +37,8 @@
 				value="<%=c.getComponent_id()%>"> <input type="submit"
 				value="ヒントを見る">
 		</form>
-		<form action="ChildComponentListPageServlet" method="get"
+		<form action="ComponentListPageServlet" method="get"
 			style="display: inline;">
-			<input type="hidden" name="component_id"
-				value="<%=c.getComponent_id()%>">
 			<input type="submit" value="詳細を見る">
 		</form>
 	</div>

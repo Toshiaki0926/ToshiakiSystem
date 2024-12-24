@@ -1,18 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ヒント表示ページ</title>
+<link rel="stylesheet" type="text/css" href="./css/viewHint.css">
 </head>
 <body>
-	<h1>
-		ヒント:
-	</h1>
-	<pre>
-        <%=request.getAttribute("CodeHint")%>
-    </pre>
-	<a href="./JavaListServlet">戻る</a>
+	<div class="header">
+		<h1>ヒント</h1>
+	</div>
+
+	<div class="container">
+		<div class="form-group">
+			<%
+			String codeHint = (String) request.getAttribute("CodeHint");
+			if (codeHint == null) {
+				codeHint = "表示するヒントがありません。";
+			}
+			%>
+			<pre><%=codeHint%></pre>
+		</div>
+	</div>
+
+	<div class="buttons">
+		<a href="./ReturnComponentListPageServlet" class="styled-button">戻る</a>
+		<a href="./ComponentSlicePageServlet" class="styled-button">一行ずつ見る</a>
+	</div>
 </body>
 </html>

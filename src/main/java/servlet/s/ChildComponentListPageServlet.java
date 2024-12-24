@@ -11,12 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.Component;
 import dao.ReadDao;
 
-@WebServlet("/ComponentListPageServlet")
-public class ComponentListPageServlet extends HttpServlet {
+@WebServlet("/ChildComponentListPageServlet")
+public class ChildComponentListPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
@@ -24,24 +25,24 @@ public class ComponentListPageServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		ReadDao dao = new ReadDao();
 
-		String idParam = request.getParameter("source_id");
-		
+		String idParam = request.getParameter("component_id");
+
 		System.out.println("id: " + idParam);
-		int sourceId = Integer.parseInt(idParam);
-		
-		String sourceName = dao.getSource_name(sourceId);
-		
-		request.getSession().setAttribute("sourceId" , sourceId);
+		int componentId = Integer.parseInt(idParam);
+
+		//sessionを取得
+		HttpSession session = request.getSession(false);
+		//sessionに保存した現在のsourceIdを取得
+		int sourceId = (int) session.getAttribute("sourceId");
 
 		//ソースコードに含まれる親部品なしの部品をすべて取得
-		List<Integer> componentIds = dao.getPNComponentList(sourceId);
+		List<Integer> componentIds = dao.getChildComponentList(sourceId, componentId);
 		//部品IDの重複を排除するためにセットに変換
 		Set<Integer> uniqueComponentIds = new HashSet<>(componentIds);
 		//重複を排除した部品リストを取得
 		List<Component> components = dao.getComponentsByIds(uniqueComponentIds);
 
 		// リストをリクエスト属性にセット
-		request.setAttribute("SourceName", sourceName);
 		request.setAttribute("Components", components);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/componentList.jsp");

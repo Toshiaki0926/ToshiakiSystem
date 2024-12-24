@@ -145,7 +145,7 @@ public class ReadDao extends DriverAccessor{
 
 		return source_code;
 	}
-	
+
 	public String getSource_name(int source_id) {
 		String sourceName = null;
 		this.connection = this.createConnection();
@@ -395,6 +395,32 @@ public class ReadDao extends DriverAccessor{
 		return componentIds;
 	}
 
+	//部品に含まれる部品のリストを取得（部品idを受け取り、それを親とする部品を取得）
+	public List<Integer> getChildComponentList(int source_id, int component_id) {
+		List<Integer> componentIds = new ArrayList<>();
+		this.connection = this.createConnection(); // 接続を生成
+
+		try {
+			String sql = "SELECT component_id FROM component_lists WHERE source_id = ? AND parent_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			// 1個目の「?」に値をセット
+			stmt.setInt(1, source_id);
+			stmt.setInt(2, component_id);
+
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				// component_idをint型で取得
+				componentIds.add(rs.getInt("component_id"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(this.connection);
+		}
+		return componentIds;
+	}
+
 	//ソースコードに含まれる部品のリストを取得
 	public List<ComponentList> getComponentList(int source_id) {
 		List<ComponentList> components = new ArrayList<>();
@@ -593,7 +619,7 @@ public class ReadDao extends DriverAccessor{
 	//部品idを受け取り、一致する部品のリストを返す
 	public List<CodeLine> getSliceComponent(List<Integer> lineIds) {
 		List<CodeLine> codeLines = new ArrayList<>();
-		
+
 		this.connection = this.createConnection();
 
 		// プレースホルダーを生成（例: "?, ?, ?")
@@ -622,7 +648,7 @@ public class ReadDao extends DriverAccessor{
 				int lineNumber = rs.getInt("line_number");
 				String code = rs.getString("code");
 				String description = rs.getString("description");
-				
+
 				CodeLine cl = new CodeLine(lineId, lineNumber, code, description);
 				codeLines.add(cl);
 			}

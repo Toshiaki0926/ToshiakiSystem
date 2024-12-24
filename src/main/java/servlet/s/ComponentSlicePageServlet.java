@@ -26,13 +26,11 @@ public class ComponentSlicePageServlet extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
-		String cIdParam = request.getParameter("component_id");
-		int componentId = Integer.parseInt(cIdParam);
-
 		//sessionを取得
 		HttpSession session = request.getSession(false);
 		//sessionに保存したsourceIdを取得
 		int sourceId = (int) session.getAttribute("sourceId");
+		int componentId = (int) session.getAttribute("componentId");
 		
 		System.out.println(componentId);
 		System.out.println(sourceId);

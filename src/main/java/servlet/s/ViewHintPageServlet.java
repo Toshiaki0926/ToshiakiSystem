@@ -24,6 +24,9 @@ public class ViewHintPageServlet extends HttpServlet {
 
 		String cIdParam = request.getParameter("component_id");
 		int componentId = Integer.parseInt(cIdParam);
+		
+		//sessionにcomponent_idを保存
+		request.getSession().setAttribute("componentId" , componentId);
 
 		//sessionを取得
 		HttpSession session = request.getSession(false);
