@@ -13,10 +13,11 @@
 </head>
 <body>
 	<%
-	String  sourceName = (String) request.getAttribute("SourceName");
+	String sourceName = (String) request.getAttribute("SourceName");
 	%>
 	<div class="header">
-		<h1><%= sourceName%>の部品一覧</h1>
+		<h1><%=sourceName%>の部品一覧
+		</h1>
 	</div>
 	<br>
 	<div class="button-container">
@@ -28,7 +29,7 @@
 	List<Component> components = (List<Component>) request.getAttribute("Components");
 	%>
 	<%
-	if (components != null) {
+	if (components != null && !components.isEmpty()) {
 		for (Component c : components) {
 	%>
 	<div class="problem-container">
@@ -37,14 +38,16 @@
 		<form action="ViewHintPageServlet" method="get"
 			style="display: inline;">
 			<input type="hidden" name="component_id"
-				value="<%=c.getComponent_id()%>"> <input type="submit"
-				value="ヒントを見る">
+				value="<%=c.getComponent_id()%>"> 
+			<input type="hidden" name="list_id"
+				value="<%=c.getComponent_id()%>"> 
+			<input type="submit" value="ヒントを見る">
 		</form>
 		<form action="ChildComponentListPageServlet" method="get"
 			style="display: inline;">
 			<input type="hidden" name="component_id"
-				value="<%=c.getComponent_id()%>">
-			<input type="submit" value="詳細を見る">
+				value="<%=c.getComponent_id()%>"> <input type="submit"
+				value="詳細を見る">
 		</form>
 	</div>
 	<br>

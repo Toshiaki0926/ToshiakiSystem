@@ -1,0 +1,67 @@
+/* ページ全体のスタイル */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+}
+
+/* ヘッダーのスタイル */
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+/* テーブル全体のレイアウトを自動調整から固定に変更 */
+table {
+    width: 100%;  /* テーブルを親要素の幅に合わせて広げる */
+    table-layout: fixed; /* 列幅を固定 */
+    border-collapse: collapse; /* セルの枠線が重ならないように */
+}
+
+/* カラム名のスタイル */
+th {
+    background-color: #f2f2f2; /* ヘッダーセルの背景色 */
+}
+
+/* 各列の幅を指定 */
+th, td {
+    padding: 8px;  /* セルの内側の余白 */
+    text-align: left;  /* 左揃え */
+    overflow: hidden;  /* 内容がはみ出ないように */
+    white-space: normal; /* 改行を許可 */
+    word-wrap: break-word; /* 長い単語を折り返す */
+}
+
+/* 1列目（行番号）の幅を設定 */
+th:nth-child(1), td:nth-child(1) {
+    width: 15%;  /* 行番号列の幅 */
+    min-width: 50px;  /* 最小幅 */
+    max-width: 100px;  /* 最大幅 */
+}
+
+
+/* 戻るボタンの設定 */
+.button-container {
+    margin-bottom: 20px; /* ボタンコンテナの下部マージン */
+}
+
+.button-container a {
+    padding: 12px 20px; /* ボタンの内側余白 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    margin: 0 20px; /* ボタンの左右マージン */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    text-decoration: none; /* ボタンのテキスト装飾なし */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.button-container a:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色 */
+}
+

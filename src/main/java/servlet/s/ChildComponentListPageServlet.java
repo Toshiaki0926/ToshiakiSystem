@@ -34,8 +34,11 @@ public class ChildComponentListPageServlet extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		//sessionに保存した現在のsourceIdを取得
 		int sourceId = (int) session.getAttribute("sourceId");
+		
+		System.out.println(sourceId);
+		System.out.println(componentId);
 
-		//ソースコードに含まれる親部品なしの部品をすべて取得
+		//受け取った部品idに含まれる子部品をすべて取得
 		List<Integer> componentIds = dao.getChildComponentList(sourceId, componentId);
 		//部品IDの重複を排除するためにセットに変換
 		Set<Integer> uniqueComponentIds = new HashSet<>(componentIds);

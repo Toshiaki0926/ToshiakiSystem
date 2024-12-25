@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.ReadDao;
+import dao.WriteDao;
 import hint.Main2;
 
 @WebServlet("/ViewHintPageServlet")
@@ -55,7 +56,15 @@ public class ViewHintPageServlet extends HttpServlet {
 
 		// 最終的な文字列
 		String codeHint = codeHintBuilder.toString().trim();
-
+		
+		//ヒント要求履歴を保存
+		//sessionからuserIdを取得
+		String userId = (String) session.getAttribute("userId");
+		
+		WriteDao wDao = new WriteDao();
+		
+		wDao.insertEvent(userId, componentId, sourceId);
+		
 		// リストをリクエスト属性にセット
 		request.setAttribute("CodeHint", codeHint);
 

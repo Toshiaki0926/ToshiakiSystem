@@ -16,7 +16,7 @@
 	<div class="button-container">
 		<a href="javascript:history.back();">戻る</a>
 		<a href="./ReturnComponentListPageServlet">部品リストへ戻る</a>
-		<a href="./ReturnComponentListPageServlet">コードを見る</a>
+		<a href="./ComponentSliceCodePageServlet">コードを見る</a>
 	</div>
 
 	<%

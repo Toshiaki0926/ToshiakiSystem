@@ -58,6 +58,7 @@ public class ReadDao extends DriverAccessor{
 				//rsから，"password"というカラムの値を取得し，userのpasswordにセット（以下，同様）
 				user.setPassword( rs.getString("password") );
 				user.setName( rs.getString("name") );
+				user.setRole( rs.getInt("role") );
 			}
 			else{
 				this.closeConnection(this.connection);
@@ -455,6 +456,11 @@ public class ReadDao extends DriverAccessor{
 	//部品idを受け取り、一致する部品のリストを返す
 	public List<Component> getComponentsByIds(Set<Integer> componentIds) {
 		List<Component> components = new ArrayList<>();
+		// 引数が空の場合、早期リターン
+	    if (componentIds == null || componentIds.isEmpty()) {
+	        return components; // 空のリストを返す
+	    }
+	    
 		this.connection = this.createConnection();
 
 		// プレースホルダーを生成（例: "?, ?, ?")

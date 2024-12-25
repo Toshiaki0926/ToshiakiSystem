@@ -1,0 +1,64 @@
+@charset "UTF-8";
+/* 全体を中央揃え */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* ビューポート全体を占める高さ */
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* 背景色を薄い灰色に設定 */
+}
+
+.container {
+    text-align: center;
+    background: white; /* 背景を白に設定 */
+    padding: 30px;
+    border-radius: 10px; /* 角を丸くする */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 影を追加 */
+}
+
+/* フォーム内の各項目をフレックスで横並びに配置 */
+.form-group {
+    display: flex;
+    justify-content: flex-start; /* 左揃え */
+    align-items: center; /* 垂直方向を中央揃え */
+    margin-bottom: 20px; /* 下部マージンを設定 */
+}
+
+/* ラベルのスタイル */
+.form-group label {
+    width: 150px; /* ラベルの固定幅 */
+    text-align: right; /* ラベルの右揃え */
+    margin-right: 10px; /* ラベルと入力フィールドの間隔 */
+    font-size: 18px; /* フォントサイズ */
+}
+
+/* 入力フィールドのスタイル */
+.form-group input[type="file"], 
+.form-group input[type="text"] {
+    flex: 1; /* 残りのスペースを占める */
+    font-size: 16px; /* フォントサイズ */
+    padding: 5px; /* 内側の余白 */
+    border: 1px solid #ccc; /* 枠線の色 */
+    border-radius: 5px; /* 角を丸くする */
+}
+
+/* ボタンの共通スタイル */
+.styled-button {
+    padding: 9px 20px; /* ボタンの内側余白 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    margin: 0 30px; /* ボタンの左右マージン */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    text-decoration: none; /* ボタンのテキスト装飾なし */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+    border: none; /* 枠線を削除 */
+    display: inline-block; /* インラインブロック表示 */
+}
+
+/* ボタンのホバー時のスタイル */
+.styled-button:hover {
+    background-color: #45a049; /* ホバー時の背景色 */
+}

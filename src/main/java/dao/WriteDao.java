@@ -279,5 +279,32 @@ public class WriteDao extends DriverAccessor{
 		}
 	}
 	
+	//部品の説明を受け取り、DBに格納する
+		public void insertEvent(String userId, int componentId, int sourceId) {
+			this.connection= this.createConnection();
+
+			try{
+				String sql = "insert into events (user_id, component_id, source_id) values(?, ?, ?)";
+
+				PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+				//1個目の「?」に値をセット
+				stmt.setString(1, userId);
+				stmt.setInt(2, componentId);
+				stmt.setInt(3, sourceId);
+
+				//SQL文を実行
+				stmt.executeUpdate();
+
+				stmt.close();
+				this.closeConnection(connection);
+			}catch(SQLException e){
+				this.closeConnection(connection);
+				e.printStackTrace();
+			} finally {
+				this.closeConnection(connection);
+			}
+		}
+	
 
 }

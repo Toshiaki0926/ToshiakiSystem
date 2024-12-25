@@ -25,7 +25,7 @@
 	List<Component> components = (List<Component>) request.getAttribute("Components");
 	%>
 	<%
-	if (components != null) {
+	if (components != null && !components.isEmpty()) {
 		for (Component c : components) {
 	%>
 	<div class="problem-container">
@@ -47,7 +47,7 @@
 	}
 	} else {
 	%>
-	<p>登録された部品がありません。</p>
+	<p>これより細かい部品はありません</p>
 	<%
 	}
 	%>

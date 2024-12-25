@@ -72,7 +72,7 @@ public class ComponentSliceCodePageServlet extends HttpServlet {
 		
 		//行番号全体と何行目かの表示は+2すればいい（クラス定義とメソッド定義を無視しして分解してるため）
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/componentSlice.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/componentSliceCode.jsp");
 		dispatcher.forward(request, response);
 	}
 

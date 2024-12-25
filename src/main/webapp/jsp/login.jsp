@@ -4,31 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ログインページ</title>
+<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
 <body>
-	<!--  LoginServletにデータを送信するformを宣言する. 登録処理なので，methodはpostを指定．
-	後はentryArticle.jspと同様なので，そちらのコメントを参考にするとよい．-->
-	<div id="form">
-		<p class="form-title">ログインページ</p>
+	<div class="container">
+		<h1>ログインページ</h1>
 		<form action="./LoginServlet" method="post">
-			<p class="mail">
-				<label>ログインID：<input type="text" name="user_id" size="30"
-					maxlength="20"></label>
-			</p>
-			<p class="pass">
-				<label>パスワード：<input type="password" name="password"
-					size="20" maxlength="20"></label>
-			</p>
-			<p class="submit">
-				<input type="submit" value="ログイン">
-			</p>
+			<div class="form-group">
+				<label>ログインID:</label> <input type="text" name="user_id" required />
+			</div>
+			<div class="form-group">
+				<label>パスワード:</label> <input type="password" name="password" required />
+			</div>
+			<button type="submit" class="styled-button">ログイン</button>
 		</form>
 	</div>
-	<!-- EntryUserPageServletにハイパーリンク．
-	ハイパーリンクによるアクセスは，GETアクセスとなり，サーブレットのdoGet()が呼ばれる． -->
-
-	<br>
-
 </body>
+
 </html>
