@@ -9,7 +9,7 @@
 <html>
 <head>
 <title>子部品一覧</title>
-<link rel="stylesheet" type="text/css" href="./css/componentList.css">
+<link rel="stylesheet" type="text/css" href="./css/childComponentList.css">
 </head>
 <body>
 	<div class="header">

@@ -45,7 +45,7 @@ public class ChildComponentListPageServlet extends HttpServlet {
 		// リストをリクエスト属性にセット
 		request.setAttribute("Components", components);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/componentList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/childComponentList.jsp");
 		dispatcher.forward(request, response);
 	}
 }

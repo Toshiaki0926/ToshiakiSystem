@@ -51,4 +51,23 @@ th:nth-child(2), td:nth-child(2) {
     max-width: 300px; /* 最大幅 */
 }
 
+/* 戻るボタンの設定 */
+.button-container {
+    margin-bottom: 20px; /* ボタンコンテナの下部マージン */
+}
+
+.button-container a {
+    padding: 12px 20px; /* ボタンの内側余白 */
+    font-size: 18px; /* ボタンのフォントサイズ */
+    margin: 0 20px; /* ボタンの左右マージン */
+    background-color: #4CAF50; /* ボタンの背景色 */
+    color: white; /* ボタンのテキスト色 */
+    text-decoration: none; /* ボタンのテキスト装飾なし */
+    border-radius: 5px; /* ボタンの角丸 */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.button-container a:hover {
+    background-color: #45a049; /* ボタンのホバー時背景色 */
+}
 

@@ -13,6 +13,11 @@
 		<h1>部品のコード分割</h1>
 	</div>
 	<br>
+	<div class="button-container">
+		<a href="javascript:history.back();">戻る</a>
+		<a href="./ReturnComponentListPageServlet">部品リストへ戻る</a>
+		<a href="./ReturnComponentListPageServlet">コードを見る</a>
+	</div>
 
 	<%
 	// Servletから受け取る属性
