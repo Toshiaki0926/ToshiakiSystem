@@ -14,7 +14,9 @@ public class PythonExecutor {
 
 		// ソースコードを文字列として定義
 		String fileContent = source_code;
-		
+		// 余計な空行を削除する
+		String cleanCode = fileContent.replaceAll("(?m)^[ \t]*\r?\n", "");
+
 		try {
 			String PythonPath = "C:\\pleiades\\2023-12\\workspace\\Hint1\\python\\script3.py";
 			// Pythonスクリプトを実行
@@ -24,7 +26,7 @@ public class PythonExecutor {
 			// ソースコードをUTF-8でエンコードして渡す
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(process.getOutputStream(), StandardCharsets.UTF_8);
 			PrintWriter writer = new PrintWriter(outputStreamWriter);
-			writer.write(fileContent);  // そのままUTF-8で渡す
+			writer.write(cleanCode);  // そのままUTF-8で渡す
 			writer.flush();
 			writer.close();
 
@@ -46,17 +48,17 @@ public class PythonExecutor {
 			} else {
 				System.out.println("Python script failed with exit code: " + exitCode);
 			}
-			
+
 			BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 			StringBuilder errorOutput = new StringBuilder();
 			while ((line = errorReader.readLine()) != null) {
-			    errorOutput.append(line).append("\n");
+				errorOutput.append(line).append("\n");
 			}
 			if (exitCode != 0) {
-			    System.out.println("Python script failed with exit code: " + exitCode);
-			    System.out.println("Error output: " + errorOutput.toString());
+				System.out.println("Python script failed with exit code: " + exitCode);
+				System.out.println("Error output: " + errorOutput.toString());
 			}
-			
+
 			JsonToDatabase.main(source_id);
 
 		} catch (IOException | InterruptedException e) {

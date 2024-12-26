@@ -51,7 +51,7 @@ public class SetChildComponentServlet extends HttpServlet{
 		//部品を保存し、生成されたlist_idを取得する
 		int listId = dao.insertComponentList(component);
 		
-		//sessionに保存した現在のsourceIdを取得
+		//sessionに保存した現在のlineIdを取得
 		List<Integer> lineIds = (List<Integer>) session.getAttribute("lineIds");
 
 		//部品の該当行を保存

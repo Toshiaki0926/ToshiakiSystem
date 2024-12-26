@@ -37,7 +37,7 @@ pre {
     margin: 0;
     white-space: pre-wrap; /* 改行を維持して折り返し */
     word-wrap: break-word; /* 長い文字列を折り返し */
-    font-size: 28px; /* 文字サイズを大きくする */
+    font-size: 18px; /* 文字サイズを大きくする */
     line-height: 1.5; /* 行間を調整して見やすくする（任意） */
 }
 

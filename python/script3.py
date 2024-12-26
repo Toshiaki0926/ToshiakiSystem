@@ -19,9 +19,9 @@ file_content = sys.stdin.read().strip()
 prompt = f"""
 以下のJavaコードを1行ずつに分解し、それぞれに日本語で簡潔な説明を付けてJSON形式で出力してください。
 注意点:
-1. クラス定義やメソッド定義（例: classやpublic static void mainなど）は無視してください。
-2. 行番号は無視した行も含めて全体の行番号を維持してください。
-3. 各コード行について、その行単体での動作や役割を説明してください。
+1. インポートやクラス定義などは無視せず、すべての行について説明を付けてください。ただし、空行は無視してください。
+2. 各コード行について、その行単体での動作や役割を説明してください。
+3. json形式の前後に「```json」と「```」を含まないでください。
 
 例:
 Javaコード: 
@@ -55,13 +55,12 @@ System.out.println("Hello");
     "description": "totalの値を画面出力する"
   }},
   {{
-    "line_number": 5,
+    "line_number": ,
     "code": "System.out.println("Hello");",
     "description": "「Hello」と画面出力する"
   }}
 ]
-
-Javaコード:
+以下が分解して欲しいJavaコードです:
 {file_content}
 """
 
@@ -70,18 +69,26 @@ Javaコード:
 response = model.generate_content(prompt)  
 response_text = response.text
 
-try:
-    # 前後の囲み記号を正規表現で除去
-    cleaned_response = re.sub(r"```json|```", "", response_text).strip()
-    
-    # クリーニングしたレスポンスをJSONとしてパース
-    json_data = json.loads(cleaned_response)
+# 不正な制御文字を取り除くための正規表現
+cleaned_response = re.sub(r'[\x00-\x1F\x7F]', '', response_text)
 
-    # JSONデータをファイルに保存
-    with open(r"C:\pleiades\2023-12\workspace\Hint1\json\output.json", "w", encoding="utf-8") as json_file:
-        json.dump(json_data, json_file, ensure_ascii=False, indent=4)
+# その後、パースを試みる　「[」と「]」の間だけをパース
+json_match = re.search(r"\[.*\]", cleaned_response, re.DOTALL)
 
-    print("JSONデータをoutput.jsonに保存しました。")
-except json.JSONDecodeError:
-    print("GeminiからのレスポンスをJSONとしてパースできませんでした:")
-    print(response_text)
+if json_match:
+    json_text = json_match.group(0).strip()  # マッチ部分をトリムして取得
+        
+    try:
+        json_data = json.loads(json_text)  # 抽出部分をJSONとしてパース
+
+        # JSONデータをファイルに保存
+        with open(r"C:\pleiades\2023-12\workspace\Hint1\json\output.json", "w", encoding="utf-8") as json_file:
+            json.dump(json_data, json_file, ensure_ascii=False, indent=4)
+
+        print("JSONデータをoutput.jsonに保存しました。")
+    except json.JSONDecodeError as e:
+        print("GeminiからのレスポンスをJSONとしてパースできませんでした:")
+        print("エラー内容:", e)
+        print("レスポンス:", response_text)
+else:
+    print("JSON部分の抽出に失敗しました。レスポンスの内容を確認してください。")

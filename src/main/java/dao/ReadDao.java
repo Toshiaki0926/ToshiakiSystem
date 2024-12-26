@@ -457,10 +457,10 @@ public class ReadDao extends DriverAccessor{
 	public List<Component> getComponentsByIds(Set<Integer> componentIds) {
 		List<Component> components = new ArrayList<>();
 		// 引数が空の場合、早期リターン
-	    if (componentIds == null || componentIds.isEmpty()) {
-	        return components; // 空のリストを返す
-	    }
-	    
+		if (componentIds == null || componentIds.isEmpty()) {
+			return components; // 空のリストを返す
+		}
+
 		this.connection = this.createConnection();
 
 		// プレースホルダーを生成（例: "?, ?, ?")
@@ -526,6 +526,32 @@ public class ReadDao extends DriverAccessor{
 		}
 
 		return componentCode;
+	}
+
+	//ソースコードに含まれる部品のうち最も若いidのコードを返す
+	public int getComponentCode2(int componentId, int sourceId) {
+		int listId = -1;
+		this.connection = this.createConnection();
+
+		try {
+			String sql = "SELECT list_id FROM component_lists WHERE component_id = ? AND source_id = ? ORDER BY list_id ASC LIMIT 1";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			stmt.setInt(1, componentId);
+			stmt.setInt(2, sourceId);
+
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				listId = rs.getInt("list_id");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return listId;
 	}
 
 	//source_idとcomponent_idを受け取ると、一致するlist_idを全て取得
@@ -690,6 +716,44 @@ public class ReadDao extends DriverAccessor{
 		}
 
 		return maxLineNumber; // 結果を返す
+	}
+
+	//line_idを複数受け取って、一致するline_numberを受け取る
+	public List<Integer> getLineNumbers(List<Integer> lineIds) {
+		List<Integer> lineNumbers = new ArrayList<>();
+		this.connection = this.createConnection();
+
+		// プレースホルダーを生成（例: "?, ?, ?")
+		StringBuilder placeholders = new StringBuilder();
+		for (int i = 0; i < lineIds.size(); i++) {
+			placeholders.append("?");
+			if (i < lineIds.size() - 1) {
+				placeholders.append(",");
+			}
+		}
+
+		try {
+			String sql = "SELECT line_number FROM code_lines WHERE line_id IN (" + placeholders + ")";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+			// プレースホルダーに値を設定
+			int index = 1;
+			for (int id : lineIds) {
+				stmt.setInt(index++, id);
+			}
+
+			// クエリを実行
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lineNumbers.add(rs.getInt("line_number"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace(); // エラーメッセージを出力
+		} finally {
+			this.closeConnection(this.connection); // 接続を必ず閉じる
+		}
+
+		return lineNumbers;
 	}
 
 }

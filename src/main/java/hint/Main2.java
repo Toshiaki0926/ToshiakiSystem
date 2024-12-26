@@ -19,9 +19,9 @@ public class Main2 {
 		cu.accept(new ForStmtReplacer(), null);
 //		cu.accept(new ForStmtReplacer2(), null);
 		cu.accept(new IfStmtReplacer(), null);
-//		cu.accept(new VariableReplacer(varNames), null);
+		cu.accept(new VariableReplacer(varNames), null);
 //		cu.accept(new VariableReplacer2(varNames), null);
-		cu.accept(new VariableReplacer3(varNames), null);
+//		cu.accept(new VariableReplacer3(varNames), null);
 
 		// 変更後のソースコードを返す
 		return cu.toString();

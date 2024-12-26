@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.List"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,10 +19,15 @@
 			<%
 			String codeHint = (String) request.getAttribute("CodeHint");
 			if (codeHint == null) {
-				codeHint = "表示するヒントがありません。";
+				%>
+			<p>設定された部品がありません。</p>
+			<%
+			} else {
+				%>
+			<pre><%=codeHint%></pre>
+			<%
 			}
 			%>
-			<pre><%=codeHint%></pre>
 		</div>
 	</div>
 

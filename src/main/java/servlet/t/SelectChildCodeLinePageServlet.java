@@ -26,7 +26,7 @@ public class SelectChildCodeLinePageServlet extends HttpServlet {
 		String comIdParam = request.getParameter("selectedComponentId");
 		
 		System.out.println(listIdParam);
-		System.out.println(comIdParam);
+		System.out.println("id :"+comIdParam);
 
 		int listId = Integer.parseInt(listIdParam);
 		int componentId = Integer.parseInt(comIdParam);

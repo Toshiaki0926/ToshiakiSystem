@@ -1,72 +1,67 @@
 [
     {
         "line_number": 1,
-        "code": "int[] score = new int[6];",
-        "description": "要素数6の整数型配列scoreを宣言し、初期化する"
+        "code": "package Samplecode;",
+        "description": "Samplecodeパッケージを宣言する"
     },
     {
         "line_number": 2,
-        "code": "int total = 0;",
-        "description": "整数型変数totalを宣言し、0で初期化する"
+        "code": "public class Sample5 {",
+        "description": "Sample5という名前のpublicなクラスを定義する"
     },
     {
         "line_number": 3,
-        "code": "double average;",
-        "description": "double型変数averageを宣言する"
+        "code": "public static void main(String[] args) {",
+        "description": "mainメソッドの定義を開始する。プログラム実行の開始点。"
+    },
+    {
+        "line_number": 4,
+        "code": "System.out.println(\"キーボードから入力してください\");",
+        "description": "\"キーボードから入力してください\"というメッセージをコンソールに出力する"
     },
     {
         "line_number": 5,
-        "code": "score[0] = 86;",
-        "description": "score配列の0番目の要素に86を代入する"
+        "code": "int num = new java.util.Scanner(System.in).nextInt();",
+        "description": "標準入力から整数値を読み込み、num変数に代入する"
     },
     {
         "line_number": 6,
-        "code": "score[1] = 74;",
-        "description": "score配列の1番目の要素に74を代入する"
+        "code": "if(num < 10) {",
+        "description": "numが10より小さい場合、以下の処理を実行する"
     },
     {
         "line_number": 7,
-        "code": "score[2] = 91;",
-        "description": "score配列の2番目の要素に91を代入する"
+        "code": "num = num + 10 + 20 + 30;",
+        "description": "numに10、20、30を加算する"
     },
     {
         "line_number": 8,
-        "code": "score[3] = 59;",
-        "description": "score配列の3番目の要素に59を代入する"
+        "code": "} else {",
+        "description": "それ以外の場合(numが10以上の場合)、以下の処理を実行する"
     },
     {
         "line_number": 9,
-        "code": "score[4] = 100;",
-        "description": "score配列の4番目の要素に100を代入する"
+        "code": "num = num - 1 - 2 - 3;",
+        "description": "numから1、2、3を減算する"
     },
     {
         "line_number": 10,
-        "code": "score[5] = 41;",
-        "description": "score配列の5番目の要素に41を代入する"
+        "code": "}",
+        "description": "if-else文の終了"
+    },
+    {
+        "line_number": 11,
+        "code": "System.out.println(num);",
+        "description": "numの値をコンソールに出力する"
     },
     {
         "line_number": 12,
-        "code": "for(int i = 0 ; i < score.length ; i++) {",
-        "description": "iを0からscore配列の長さ未満まで繰り返すループを開始する"
+        "code": "}",
+        "description": "mainメソッドの定義を終了する"
     },
     {
         "line_number": 13,
-        "code": "total += score[i];",
-        "description": "totalにscore配列のi番目の要素を加算する"
-    },
-    {
-        "line_number": 14,
         "code": "}",
-        "description": "forループの終了"
-    },
-    {
-        "line_number": 15,
-        "code": "average = (double)total / score.length;",
-        "description": "totalをdouble型にキャストし、score配列の長さで割ってaverageに代入する"
-    },
-    {
-        "line_number": 17,
-        "code": "System.out.println(average);",
-        "description": "averageの値をコンソールに出力する"
+        "description": "Sample5クラスの定義を終了する"
     }
 ]

@@ -19,8 +19,7 @@
 	</div>
 	<br>
 	<div class="button-container">
-		<a href="./AdminServlet">戻る</a>
-		<a href="./DeleteJavaServlet">このソースコードを削除</a>
+		<a href="./AdminServlet">戻る</a> <a href="./DeleteJavaServlet">このソースコードを削除</a>
 	</div>
 	<br>
 
@@ -77,30 +76,28 @@
 	<%
 	if (comList != null && !comList.isEmpty()) {
 	%>
-	<form action="SelectChildCodeLinePageServlet" method="get">
-		<!-- フォームを追加 -->
-		<table>
-			<thead>
-				<tr>
-					<th>親部品</th>
-					<th>該当コード</th>
-					<th>部品名</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				<%
-				String description = null;
+	<table>
+		<thead>
+			<tr>
+				<th>親部品</th>
+				<th>該当コード</th>
+				<th>部品名</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
 				for (ComponentList c : comList) {
+					String description = null;
 					for (Component component : components) {
 						if (component.getComponent_id() == c.getComponent_id()) {
 							description = component.getComponent_description();
 						}
 					}
 				%>
-				<tr>
-					<td>
-						<!-- 親部品がnullかチェック、nullなら「null」と表示 --> <%
+			<tr>
+				<td>
+					<!-- 親部品がnullかチェック、nullなら「null」と表示 --> <%
 						if (c.getParent_id() != null) {
 							String parentDescription = null;
 							for (Component component : components) {
@@ -113,23 +110,25 @@
 						%> <%= "なし" %> <%
 						}
 						%>
-					</td>
-					<td><%=c.getComponent_code()%></td>
-					<td><%=description%></td>
-					<td><button type="submit" name="selectedListId"
-						value="<%=c.getList_id()%>"> 子部品設定</button>
-						<input type="hidden" name="selectedComponentId" 
-						value="<%=c.getComponent_id()%>">
-						<input type="hidden" name="selectedComponentCode" 
-						value="<%=c.getComponent_code()%>">
-					</td>
-				</tr>
-				<%
+				</td>
+				<td><%=c.getComponent_code()%></td>
+				<td><%=description%></td>
+				<td>
+					<form action="SelectChildCodeLinePageServlet" method="get">
+						<input type="hidden" name="selectedListId"
+							value="<%=c.getList_id()%>"> <input type="hidden"
+							name="selectedComponentId" value="<%=c.getComponent_id()%>">
+						<input type="hidden" name="selectedComponentCode"
+							value="<%=c.getComponent_code()%>">
+						<button type="submit">子部品設定</button>
+					</form>
+				</td>
+			</tr>
+			<%
 				}
 				%>
-			</tbody>
-		</table>
-	</form>
+		</tbody>
+	</table>
 	<%
 	} else {
 	%>
