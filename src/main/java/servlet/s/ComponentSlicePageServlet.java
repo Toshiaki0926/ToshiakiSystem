@@ -16,6 +16,7 @@ import beans.CodeLine;
 import beans.ListLine;
 import beans.SliceCodeList;
 import dao.ReadDao;
+import dao.WriteDao;
 
 @WebServlet("/ComponentSlicePageServlet")
 public class ComponentSlicePageServlet extends HttpServlet {
@@ -65,6 +66,16 @@ public class ComponentSlicePageServlet extends HttpServlet {
 				}
 			}
 		}
+		
+		//ヒント要求履歴を保存
+		//sessionからuserIdを取得
+		String userId = (String) session.getAttribute("userId");
+
+		WriteDao wDao = new WriteDao();
+
+		//ヒント要求履歴を保存
+		wDao.insertEvent(userId, componentId, sourceId, 2);
+		
 		
 		// リストをリクエスト属性にセット
 		request.setAttribute("SliceComponent", sliceCodeList);

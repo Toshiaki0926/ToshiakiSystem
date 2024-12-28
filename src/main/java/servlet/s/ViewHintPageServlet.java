@@ -1,6 +1,8 @@
 package servlet.s;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Source_file;
 import dao.ReadDao;
 import dao.WriteDao;
 import hint.Main2;
@@ -25,7 +28,7 @@ public class ViewHintPageServlet extends HttpServlet {
 
 		String cIdParam = request.getParameter("component_id");
 		int componentId = Integer.parseInt(cIdParam);
-		
+
 		//sessionにcomponent_idを保存
 		request.getSession().setAttribute("componentId" , componentId);
 
@@ -36,37 +39,55 @@ public class ViewHintPageServlet extends HttpServlet {
 
 		ReadDao dao = new ReadDao();
 
-		String componentCode = dao.getComponentCode(componentId, sourceId);
+		//部品の中で一番若いlist_idを取得
+		int listId = dao.getComponentCode2(componentId, sourceId);
 
-		String code = "public class Sample1 {\n public static void main(String[] args){\n" + componentCode + "\n} \n}";
+		//ソースコード情報取得
+		Source_file sourceCode = dao.getSource_Code(sourceId);
 
 		// 変数名を空欄に置き換える
-		String hintCode = Main2.replaceVariables(code);
+		String hintCode = Main2.replaceVariables(sourceCode.getSource_Code());
+		
+		// 余計な空行を削除する
+		String cleanHintCode = hintCode.replaceAll("(?m)^[ \t]*\r?\n", "");
 
 		// 改行で文字列を分割
-		String[] lines = hintCode.split("\n");
+		String[] lines = cleanHintCode.split("\n");
 
-		// 最初の1行目、最初の2行目、最後の2行目、最後の1行目を除外
-		StringBuilder codeHintBuilder = new StringBuilder();
-
-		// 2行目から最終行の2行前まで追加
-		for (int i = 3; i < lines.length - 2; i++) {
-			codeHintBuilder.append(lines[i]).append("\n");
-		}
-
-		// 最終的な文字列
-		String codeHint = codeHintBuilder.toString().trim();
+		//部品に該当する行line_idを取得
+		List<Integer> lineIds = dao.getComponentLineIds(listId);
 		
+		//line_idに一致するline_numberを取得
+		List<Integer> lineNums = dao.getLineNumbers(lineIds);
+
+		// ヒントを格納するリスト
+		List<String> codeHint = new ArrayList<>();
+
+		// リストから指定された行を取り出して結果に格納
+		for (int lineIndex : lineNums) {
+			// 1始まりの行番号を0始まりのインデックスに変換
+		    int adjustedIndex = lineIndex - 1;
+
+		    if (adjustedIndex >= 0 && adjustedIndex < lines.length) {
+		        codeHint.add(lines[adjustedIndex]);
+		    }
+		}
+		
+		//リスト型のヒントコードをString型に変換
+		String codeHintString = String.join("\n", codeHint);
+		
+
 		//ヒント要求履歴を保存
 		//sessionからuserIdを取得
 		String userId = (String) session.getAttribute("userId");
-		
+
 		WriteDao wDao = new WriteDao();
-		
-		wDao.insertEvent(userId, componentId, sourceId);
-		
+
+		//ヒント要求履歴を保存
+		wDao.insertEvent(userId, componentId, sourceId, 1);
+
 		// リストをリクエスト属性にセット
-		request.setAttribute("CodeHint", codeHint);
+		request.setAttribute("CodeHint", codeHintString);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("./jsp/s/viewHint.jsp");
 		dispatcher.forward(request, response);

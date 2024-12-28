@@ -47,7 +47,7 @@ public class WriteDao extends DriverAccessor{
 			this.closeConnection(connection);
 		}
 	}
-	
+
 	// Codeを受け取り，DBに格納し、生成されたsource_idを返す
 	public int insertSource_Code2(Source_file source_code) {
 		this.connection = this.createConnection();
@@ -101,7 +101,7 @@ public class WriteDao extends DriverAccessor{
 			this.closeConnection(connection);
 		}
 	}
-	
+
 	//1行ずつのコードをテーブルに保存
 	public void insertCodeLines(List<CodeLine> codeLines, int sourceId) {
 		this.connection = this.createConnection();
@@ -126,7 +126,7 @@ public class WriteDao extends DriverAccessor{
 			this.closeConnection(this.connection);
 		}
 	}
-	
+
 	//ソースコードに含まれる部品を設定し、生成されたlist_idを取得
 	public int insertComponentList(ComponentList component) {
 		this.connection= this.createConnection();
@@ -278,33 +278,34 @@ public class WriteDao extends DriverAccessor{
 			this.closeConnection(connection);
 		}
 	}
-	
-	//部品の説明を受け取り、DBに格納する
-		public void insertEvent(String userId, int componentId, int sourceId) {
-			this.connection= this.createConnection();
 
-			try{
-				String sql = "insert into events (user_id, component_id, source_id) values(?, ?, ?)";
+	//ヒント要求履歴を保存
+	public void insertEvent(String userId, int componentId, int sourceId, int hintLevel) {
+		this.connection= this.createConnection();
 
-				PreparedStatement stmt = this.connection.prepareStatement(sql);
+		try{
+			String sql = "insert into events (user_id, component_id, source_id, hint_level) values(?, ?, ?, ?)";
 
-				//1個目の「?」に値をセット
-				stmt.setString(1, userId);
-				stmt.setInt(2, componentId);
-				stmt.setInt(3, sourceId);
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
 
-				//SQL文を実行
-				stmt.executeUpdate();
+			//1個目の「?」に値をセット
+			stmt.setString(1, userId);
+			stmt.setInt(2, componentId);
+			stmt.setInt(3, sourceId);
+			stmt.setInt(4, hintLevel);
 
-				stmt.close();
-				this.closeConnection(connection);
-			}catch(SQLException e){
-				this.closeConnection(connection);
-				e.printStackTrace();
-			} finally {
-				this.closeConnection(connection);
-			}
+			//SQL文を実行
+			stmt.executeUpdate();
+
+			stmt.close();
+			this.closeConnection(connection);
+		}catch(SQLException e){
+			this.closeConnection(connection);
+			e.printStackTrace();
+		} finally {
+			this.closeConnection(connection);
 		}
-	
+	}
+
 
 }
