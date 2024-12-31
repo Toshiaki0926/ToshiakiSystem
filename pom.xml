@@ -5,6 +5,7 @@
   <groupId>com.java</groupId>
   <artifactId>Hint1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
   
   <properties>
         <maven.compiler.source>17</maven.compiler.source>
