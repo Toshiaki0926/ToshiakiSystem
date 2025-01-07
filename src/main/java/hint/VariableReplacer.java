@@ -6,6 +6,7 @@ import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.expr.AssignExpr;
 import com.github.javaparser.ast.expr.BinaryExpr;
 import com.github.javaparser.ast.expr.CastExpr;
+import com.github.javaparser.ast.expr.CharLiteralExpr;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.expr.NameExpr;
@@ -59,6 +60,13 @@ public class VariableReplacer extends VoidVisitorAdapter<Void> {
 		super.visit(integerLiteralExpr, arg);
 		// 整数リテラル（定数）を空欄に置き換え
 		integerLiteralExpr.setValue("_");
+	}
+	
+	@Override
+	public void visit(CharLiteralExpr charLiteralExpr, Void arg) {
+	    super.visit(charLiteralExpr, arg);
+	    // charリテラルを'_'に置き換える
+	    charLiteralExpr.setValue("_");
 	}
 
 	@Override
